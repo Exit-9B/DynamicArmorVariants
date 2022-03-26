@@ -1,0 +1,104 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Exit-9B/DynamicArmorVariants/main/docs/DynamicArmorVariants.schema.json",
+  "title": "Dynamic Armor Variants",
+  "description": "Provides definitions for Dynamic Armor Variants",
+  "type": "object",
+  "properties": {
+    "variants": {
+      "description": "Defines armor variant groups",
+      "type": "array",
+      "items": {
+        "description": "Defines a new armor variant group or extends a previously defined one",
+        "type": "object",
+        "properties": {
+          "name": {
+          },
+          "displayName": {
+            "description": "A description of the variant that can be displayed to players (may be a Scaleform translation key)",
+            "type": "string"
+          },
+          "linkTo": {
+            "description": "The name of a separately defined variant, which this variant will take precedence over for matching Armor Addons",
+            "type": "string"
+          },
+          "showHead": {
+            "description": "Prevents the Armor from hiding the character's head when replacing any of its Armor Addons",
+            "type": "boolean"
+          },
+          "showHair": {
+            "description": "Prevents the Armor from hiding the character's head or hair when replacing any of its Armor Addons",
+            "type": "boolean"
+          },
+          "replaceByForm": {
+            "description": "Assigns replacements for specific Armor Addon forms",
+            "type": "object",
+            "patternProperties": {
+              "^[\\w\\-. ]+\\.es[lmp]\\|(0[Xx])?\\x{1,8}$": {
+                "$ref": "#/defs/formOrFormList"
+              }
+            }
+          },
+          "replaceBySlot": {
+            "description": "Assigns replacements for any Armor Addons that use specified slots",
+            "type": "object",
+            "patternProperties": {
+              "[3-5][0-9]|6[0-1]": {
+                "$ref": "#/defs/formOrFormList"
+              }
+            }
+          }
+        },
+        "required": ["name", "displayName"]
+      }
+    },
+    "states": {
+      "description": "Sets up conditional states for armor variants to switch automatically",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "variant": {
+            "description": "The name of the variant to apply dynamically",
+            "type": "string"
+          },
+          "refs": {
+            "description": "Allows additional Forms to be referenced in conditions, if their Editor IDs are unavailable",
+            "type": "object"
+          },
+          "conditions": {
+            "description": "A list of conditions that will be checked to dynamically apply variants",
+            "type": "array",
+            "items": {
+              "type": "string",
+              "pattern": "(\\w+)\\s+((\\w+)(\\s+(\\w+))?\\s*)?(==|!=|>|>=|<|<=)\\s*(\\w+)(\\s+(AND|OR))?"
+            }
+          }
+        },
+        "required": ["variant", "conditions"]
+      }
+    },
+    "required": []
+  },
+  "$defs": {
+    "form": {
+      "description": "Look up a Form by a plugin file and Form ID (e.g. \"Skyrim.esm|12E47\")",
+      "type": "string",
+      "pattern": "^[\\w\\-. ]+\\.es[lmp]\\|(0[Xx])?\\x{1,8}$"
+    },
+    "formOrFormList": {
+      "anyOf": [
+        {
+          "$ref": "#/defs/form"
+        },
+        {
+          "description": "An array of Forms",
+          "type": "array",
+          "items": {
+            "$ref": "#/defs/form"
+          }
+        }
+      ]
+    }
+  }
+}

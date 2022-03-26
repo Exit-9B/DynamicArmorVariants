@@ -1,0 +1,15 @@
+{
+  "name": "dynamicarmorvariants",
+  "version": "1",
+  "description": "Framework for mods to define dynamic variants of armors",
+  "homepage": "https://github.com/Exit-9B/DynamicArmorVariants",
+  "license": "MIT",
+  "dependencies": [
+    "boost-stl-interfaces",
+    "jsoncpp",
+    "rsm-binary-io",
+    "spdlog",
+    "tsl-ordered-map",
+    "xbyak"
+  ]
+}
