@@ -3,7 +3,7 @@
   "variants": [
     {
       "name": "hiddenHelmet",
-      "displayName": "$Hidden Helmet",
+      "displayName": "$Hidden",
       "showHair": true,
       "replaceBySlot": {
         "30": "LoweredHoods.esp|859",
