@@ -2,18 +2,9 @@
   "$schema": "https://raw.githubusercontent.com/Exit-9B/DynamicArmorVariants/main/docs/DynamicArmorVariants.schema.json",
   "variants": [
     {
-      "name": "hiddenHelmet",
-      "displayName": "$Hidden",
-      "showHair": true,
-      "replaceBySlot": {
-        "30": "LoweredHoods.esp|859",
-        "31": "LoweredHoods.esp|859"
-      }
-    },
-    {
-      "name": "loweredHood",
+      "name": "LoweredHoods",
       "displayName": "$Lowered Hood",
-      "linkTo": "hiddenHelmet",
+      "linkTo": "DAV_HiddenHelmet",
       "showHair": true,
       "replaceByForm": {
         "Skyrim.esm|0BAD03": "LoweredHoods.esp|805",
@@ -82,7 +73,7 @@
   ],
   "states": [
     {
-      "variant": "hiddenHelmet",
+      "variant": "DAV_HiddenHelmet",
       "conditions": [
         "GetIsReference Player == 0 AND",
         "LocationHasKeyword LocTypeInn == 1 OR",
@@ -90,7 +81,7 @@
       ]
     },
     {
-      "variant": "loweredHood",
+      "variant": "LoweredHoods",
       "conditions": [
         "IsInInterior == 1",
         "LocationHasKeyword LocTypeDungeon == 0"
