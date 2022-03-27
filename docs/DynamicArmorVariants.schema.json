@@ -49,7 +49,7 @@
             }
           }
         },
-        "required": ["name", "displayName"]
+        "required": ["name"]
       }
     },
     "states": {

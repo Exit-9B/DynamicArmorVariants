@@ -14,6 +14,22 @@ void DynamicArmorManager::RegisterArmorVariant(const std::string& a_name, ArmorV
 	if (!inserted) {
 		auto& variant = it.value();
 
+		if (!a_variant.Linked.empty()) {
+			variant.Linked = a_variant.Linked;
+		}
+
+		if (!a_variant.DisplayName.empty()) {
+			variant.DisplayName = a_variant.DisplayName;
+		}
+
+		if (a_variant.ShowHead.has_value()) {
+			variant.ShowHead = a_variant.ShowHead.value();
+		}
+
+		if (a_variant.ShowHair.has_value()) {
+			variant.ShowHair = a_variant.ShowHair.value();
+		}
+
 		for (auto& [form, replacement] : a_variant.ReplaceByForm) {
 			variant.ReplaceByForm.insert_or_assign(form, replacement);
 			variant.ReplaceByForm[form] = replacement;
@@ -93,10 +109,10 @@ auto DynamicArmorManager::GetBipedObjectSlots(RE::Actor* a_actor, RE::TESObjectA
 				continue;
 
 			if (IsUsingVariant(a_actor, name)) {
-				if (variant.ShowHead) {
+				if (variant.ShowHead.value_or(false)) {
 					showHead = true;
 				}
-				if (variant.ShowHair) {
+				if (variant.ShowHair.value_or(false)) {
 					showHair = true;
 				}
 			}

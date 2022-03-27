@@ -16,8 +16,8 @@ struct ArmorVariant
 
 	std::string Linked;
 	std::string DisplayName;
-	bool ShowHead;
-	bool ShowHair;
+	std::optional<bool> ShowHead;
+	std::optional<bool> ShowHair;
 	FormMap ReplaceByForm;
 	SlotMap ReplaceBySlot;
 };

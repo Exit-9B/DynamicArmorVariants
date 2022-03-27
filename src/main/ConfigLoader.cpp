@@ -77,8 +77,16 @@ void ConfigLoader::LoadVariant(const std::string& a_name, Json::Value a_variant)
 
 	armorVariant.Linked = a_variant["linkTo"].asString();
 	armorVariant.DisplayName = a_variant["displayName"].asString();
-	armorVariant.ShowHead = a_variant["showHead"].asBool();
-	armorVariant.ShowHair = a_variant["showHair"].asBool();
+
+	auto& showHead = a_variant["showHead"];
+	if (showHead.isBool()) {
+		armorVariant.ShowHead = showHead.asBool();
+	}
+
+	auto& showHair = a_variant["showHair"];
+	if (showHair.isBool()) {
+		armorVariant.ShowHair = showHair.asBool();
+	}
 
 	LoadFormMap(a_variant["replaceByForm"], armorVariant.ReplaceByForm);
 	LoadSlotMap(a_variant["replaceBySlot"], armorVariant.ReplaceBySlot);
