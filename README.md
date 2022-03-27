@@ -8,6 +8,12 @@ dynamically at runtime.
 	* Add the environment variable `VCPKG_ROOT` with the value as the path to the folder containing vcpkg
 * [Visual Studio Community 2022](https://visualstudio.microsoft.com/)
 	* Desktop development with C++
+* [SKSE64 SDK](https://skse.silverlock.org/)
+	* Add the environment variable `SKSE64Path`
+* [UIExtensions SDK](https://www.nexusmods.com/skyrimspecialedition/mods/17561)
+	* Extract the BSA using your favorite tool (e.g.
+	[Bethesda Archive Extractor](https://www.nexusmods.com/skyrimspecialedition/mods/974))
+	* Add the environment variable `UIExtensionsPath`
 
 ## Register Visual Studio as a Generator
 * Open `x64 Native Tools Command Prompt`

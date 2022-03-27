@@ -3,19 +3,21 @@
 struct ArmorVariant
 {
 	using AddonList = std::vector<RE::TESObjectARMA*>;
+	using FormMap = std::unordered_map<const RE::TESObjectARMA*, AddonList>;
+	using SlotMap = std::map<BipedObject, AddonList>;
 
 	ArmorVariant() = default;
 
-	auto HasSlotOverrides() -> bool { return ShowHead || ShowHair; }
+	auto HasSlotOverrides() const -> bool { return ShowHead || ShowHair; }
 
-	auto WouldReplace(RE::TESObjectARMA* a_armorAddon) -> bool;
-	auto GetAddonList(RE::TESObjectARMA* a_armorAddon) -> AddonList*;
+	auto GetAddonList(const RE::TESObjectARMA* a_armorAddon) const -> const AddonList*;
+	auto WouldReplace(const RE::TESObjectARMA* a_armorAddon) const -> bool;
+	auto WouldReplaceAny(const RE::TESObjectARMO* a_armor) const -> bool;
 
-	std::string Name;
 	std::string Linked;
 	std::string DisplayName;
 	bool ShowHead;
 	bool ShowHair;
-	std::unordered_map<RE::TESObjectARMA*, AddonList> ReplaceByForm;
-	std::map<BipedObject, AddonList> ReplaceBySlot;
+	FormMap ReplaceByForm;
+	SlotMap ReplaceBySlot;
 };

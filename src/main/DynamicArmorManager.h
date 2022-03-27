@@ -2,7 +2,6 @@
 
 #include "ArmorVariant.h"
 
-class Condition;
 class DynamicArmorManager
 {
 public:
@@ -14,23 +13,37 @@ public:
 
 	static auto GetSingleton() -> DynamicArmorManager*;
 
-	void RegisterArmorVariant(ArmorVariant&& a_variant);
+	void RegisterArmorVariant(const std::string& a_name, ArmorVariant&& a_variant);
 	void SetCondition(const std::string& a_state, std::shared_ptr<RE::TESCondition> a_condition);
 
 	void VisitArmorAddons(
 		RE::Actor* a_actor,
 		RE::TESObjectARMA* a_armorAddon,
-		std::function<void(RE::TESObjectARMA*)> a_visit);
+		std::function<void(RE::TESObjectARMA*)> a_visit) const;
 
-	auto GetBipedObjectSlots(RE::Actor* a_actor, RE::TESObjectARMO* a_armor) -> BipedObjectSlot;
+	auto GetBipedObjectSlots(RE::Actor* a_actor, RE::TESObjectARMO* a_armor) const
+		-> BipedObjectSlot;
+
+	auto GetVariants(RE::TESObjectARMO* a_armor) const -> std::vector<std::string>;
+
+	auto GetDisplayName(const std::string& a_variant) const -> const std::string&;
+
+	void ApplyVariant(RE::Actor* a_actor, const std::string& a_variant);
+
+	void ApplyVariant(
+		RE::Actor* a_actor,
+		const RE::TESObjectARMO* a_armor,
+		const std::string& a_variant);
+
+	void ResetVariant(RE::Actor* a_actor, const RE::TESObjectARMO* a_armor);
 
 private:
 	DynamicArmorManager() = default;
 
-	auto IsUsingVariant(RE::Actor* a_actor, std::string a_state) -> bool;
+	auto IsUsingVariant(RE::Actor* a_actor, std::string a_state) const -> bool;
 
-	std::vector<ArmorVariant> _variants;
+	tsl::ordered_map<std::string, ArmorVariant> _variants;
 
 	std::unordered_map<std::string, std::shared_ptr<RE::TESCondition>> _conditions;
-	std::unordered_map<RE::Actor*, tsl::ordered_set<std::string>> _stateOverrides;
+	std::unordered_map<RE::Actor*, tsl::ordered_set<std::string>> _variantOverrides;
 };

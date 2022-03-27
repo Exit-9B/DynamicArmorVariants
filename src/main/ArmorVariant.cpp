@@ -1,11 +1,6 @@
 #include "ArmorVariant.h"
 
-auto ArmorVariant::WouldReplace(RE::TESObjectARMA* a_armorAddon) -> bool
-{
-	return GetAddonList(a_armorAddon) != nullptr;
-}
-
-auto ArmorVariant::GetAddonList(RE::TESObjectARMA* a_armorAddon) -> AddonList*
+auto ArmorVariant::GetAddonList(const RE::TESObjectARMA* a_armorAddon) const -> const AddonList*
 {
 	if (auto it = ReplaceByForm.find(a_armorAddon); it != ReplaceByForm.end()) {
 		return std::addressof(it->second);
@@ -21,4 +16,20 @@ auto ArmorVariant::GetAddonList(RE::TESObjectARMA* a_armorAddon) -> AddonList*
 	}
 
 	return nullptr;
+}
+
+auto ArmorVariant::WouldReplace(const RE::TESObjectARMA* a_armorAddon) const -> bool
+{
+	return GetAddonList(a_armorAddon) != nullptr;
+}
+
+auto ArmorVariant::WouldReplaceAny(const RE::TESObjectARMO* a_armor) const -> bool
+{
+	for (auto& armorAddon : a_armor->armorAddons) {
+		if (WouldReplace(armorAddon)) {
+			return true;
+		}
+	}
+
+	return false;
 }

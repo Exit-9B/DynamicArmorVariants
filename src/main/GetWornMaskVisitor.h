@@ -1,8 +1,8 @@
 #pragma once
 
-#include "IItemChangeVisitor.h"
+#include "Ext/IItemChangeVisitor.h"
 
-class GetWornMaskVisitor : public IItemChangeVisitor
+class GetWornMaskVisitor : public Ext::IItemChangeVisitor
 {
 public:
 	GetWornMaskVisitor(RE::Actor* a_actor) : actor{ a_actor } {}

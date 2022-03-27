@@ -33,9 +33,13 @@ if(CMAKE_GENERATOR MATCHES "Visual Studio")
 endif()
 
 list(APPEND CMAKE_IGNORE_PATH "${PROJECT_BINARY_DIR}")
-list(APPEND CMAKE_MODULE_PATH "${PROJECT_SOURCE_DIR}/cmake")
+list(APPEND CMAKE_MODULE_PATH
+	"${PROJECT_SOURCE_DIR}/cmake"
+	"${PROJECT_SOURCE_DIR}/tools/BethesdaCMakeModules/Modules"
+)
 
 include(AddCXXFiles)
+include(Papyrus)
 
 add_library("${PROJECT_NAME}" SHARED)
 
@@ -125,7 +129,37 @@ target_link_libraries(
 		spdlog::spdlog
 )
 
+file(GLOB Papyrus_SOURCES
+	LIST_DIRECTORIES false
+	CONFIGURE_DEPENDS
+	"scripts/*.psc"
+)
+
+add_papyrus(
+	"Papyrus"
+	GAME ${Skyrim64Path}
+	IMPORTS
+		${CMAKE_CURRENT_SOURCE_DIR}/scripts
+		$ENV{UIExtensionsPath}/scripts/source
+		$ENV{SKSE64Path}/Scripts/Source
+	SOURCES ${Papyrus_SOURCES}
+	OPTIMIZE
+	ANONYMIZE
+)
+
+source_group("Scripts" FILES ${Papyrus_SOURCES})
+
 install(
 	FILES "$<TARGET_FILE:${PROJECT_NAME}>"
 	DESTINATION "SKSE/Plugins"
+)
+
+install(
+	FILES ${Papyrus_SOURCES}
+	DESTINATION "Source/Scripts"
+)
+
+install(
+	FILES ${Papyrus_OUTPUT}
+	DESTINATION "Scripts"
 )

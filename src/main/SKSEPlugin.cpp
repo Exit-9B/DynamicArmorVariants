@@ -1,5 +1,6 @@
 #include "ConfigLoader.h"
 #include "Hooks.h"
+#include "Papyrus/Papyrus.h"
 #include "WornFormUpdater.h"
 
 namespace
@@ -33,8 +34,8 @@ namespace
 	}
 }
 
-extern "C" DLLEXPORT constinit auto SKSEPlugin_Version =
-[]() {
+extern "C" DLLEXPORT constinit auto SKSEPlugin_Version = []()
+{
 	SKSE::PluginVersionData v{};
 
 	v.PluginVersion(Plugin::VERSION);
@@ -55,7 +56,10 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 
 	Hooks::Install();
 
-	SKSE::GetMessagingInterface()->RegisterListener([](auto a_msg)
+	SKSE::GetPapyrusInterface()->Register(Papyrus::RegisterFuncs);
+
+	SKSE::GetMessagingInterface()->RegisterListener(
+		[](auto a_msg)
 		{
 			switch (a_msg->type) {
 			case SKSE::MessagingInterface::kDataLoaded:

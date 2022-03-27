@@ -47,7 +47,7 @@ void ConfigLoader::LoadConfig(fs::path a_path)
 		for (auto& state : states) {
 			auto variant = state["variant"].asString();
 
-			std::unordered_map<std::string, void*> refMap;
+			RefMap refMap;
 			refMap["PLAYER"s] = RE::PlayerCharacter::GetSingleton();
 
 			Json::Value refs = state["refs"];
@@ -75,7 +75,6 @@ void ConfigLoader::LoadVariant(const std::string& a_name, Json::Value a_variant)
 
 	ArmorVariant armorVariant{};
 
-	armorVariant.Name = a_name;
 	armorVariant.Linked = a_variant["linkTo"].asString();
 	armorVariant.DisplayName = a_variant["displayName"].asString();
 	armorVariant.ShowHead = a_variant["showHead"].asBool();
@@ -84,13 +83,13 @@ void ConfigLoader::LoadVariant(const std::string& a_name, Json::Value a_variant)
 	LoadFormMap(a_variant["replaceByForm"], armorVariant.ReplaceByForm);
 	LoadSlotMap(a_variant["replaceBySlot"], armorVariant.ReplaceBySlot);
 
-	DynamicArmorManager::GetSingleton()->RegisterArmorVariant(std::move(armorVariant));
+	DynamicArmorManager::GetSingleton()->RegisterArmorVariant(a_name, std::move(armorVariant));
 }
 
 void ConfigLoader::LoadConditions(
 	const std::string& a_variant,
 	Json::Value a_conditions,
-	const std::unordered_map<std::string, void*>& a_refs)
+	const RefMap& a_refs)
 {
 	if (!a_conditions.isArray())
 		return;
@@ -117,9 +116,7 @@ void ConfigLoader::LoadConditions(
 	DynamicArmorManager::GetSingleton()->SetCondition(a_variant, condition);
 }
 
-void ConfigLoader::LoadFormMap(
-	Json::Value a_replaceByForm,
-	std::unordered_map<RE::TESObjectARMA*, std::vector<RE::TESObjectARMA*>>& a_formMap)
+void ConfigLoader::LoadFormMap(Json::Value a_replaceByForm, ArmorVariant::FormMap& a_formMap)
 {
 	if (!a_replaceByForm.isObject())
 		return;
@@ -152,9 +149,7 @@ void ConfigLoader::LoadFormMap(
 	}
 }
 
-void ConfigLoader::LoadSlotMap(
-	Json::Value a_replaceBySlot,
-	std::map<BipedObject, std::vector<RE::TESObjectARMA*>>& a_slotMap)
+void ConfigLoader::LoadSlotMap(Json::Value a_replaceBySlot, ArmorVariant::SlotMap& a_slotMap)
 {
 	if (!a_replaceBySlot.isObject())
 		return;
@@ -188,9 +183,8 @@ void ConfigLoader::LoadSlotMap(
 	}
 }
 
-auto ConfigLoader::ParseCondition(
-	const std::string& a_text,
-	const std::unordered_map<std::string, void*>& a_refs) -> RE::TESConditionItem*
+auto ConfigLoader::ParseCondition(const std::string& a_text, const RefMap& a_refs)
+	-> RE::TESConditionItem*
 {
 	static std::regex re{
 		R"((\w+)\s+((\w+)(\s+(\w+))?\s*)?(==|!=|>|>=|<|<=)\s*(\w+)(\s+(AND|OR))?)"

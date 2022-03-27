@@ -1,6 +1,6 @@
 #pragma once
 
-#include "main/IItemChangeVisitor.h"
+#include "IItemChangeVisitor.h"
 
 namespace Ext
 {
