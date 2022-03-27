@@ -9,7 +9,20 @@ auto DynamicArmorManager::GetSingleton() -> DynamicArmorManager*
 
 void DynamicArmorManager::RegisterArmorVariant(const std::string& a_name, ArmorVariant&& a_variant)
 {
-	_variants.emplace(a_name, std::move(a_variant));
+	auto [it, inserted] = _variants.try_emplace(a_name, std::move(a_variant));
+
+	if (!inserted) {
+		auto& variant = it.value();
+
+		for (auto& [form, replacement] : a_variant.ReplaceByForm) {
+			variant.ReplaceByForm.insert_or_assign(form, replacement);
+			variant.ReplaceByForm[form] = replacement;
+		}
+
+		for (auto& [slot, replacement] : a_variant.ReplaceBySlot) {
+			variant.ReplaceBySlot[slot] = replacement;
+		}
+	}
 }
 
 void DynamicArmorManager::SetCondition(
