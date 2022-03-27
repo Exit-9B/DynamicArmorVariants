@@ -15,6 +15,9 @@ namespace Papyrus
 
 		void ResetVariant(RE::StaticFunctionTag*, RE::Actor* a_actor, RE::TESObjectARMO* a_armor);
 
+		auto GetEquippedArmorsWithVariants(RE::StaticFunctionTag*, RE::Actor* a_actor)
+			-> std::vector<RE::TESObjectARMO*>;
+
 		bool RegisterFuncs(RE::BSScript::IVirtualMachine* a_vm);
 	}
 }

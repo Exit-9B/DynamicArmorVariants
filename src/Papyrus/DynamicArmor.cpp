@@ -35,6 +35,12 @@ namespace Papyrus
 		DynamicArmorManager::GetSingleton()->ResetVariant(a_actor, a_armor);
 	}
 
+	auto DynamicArmor::GetEquippedArmorsWithVariants(RE::StaticFunctionTag*, RE::Actor* a_actor)
+		-> std::vector<RE::TESObjectARMO*>
+	{
+		return DynamicArmorManager::GetSingleton()->GetEquippedArmorsWithVariants(a_actor);
+	}
+
 	bool DynamicArmor::RegisterFuncs(RE::BSScript::IVirtualMachine* a_vm)
 	{
 		REGISTER(a_vm, GetAPIVersion);
@@ -42,6 +48,7 @@ namespace Papyrus
 		REGISTER(a_vm, GetDisplayName);
 		REGISTER(a_vm, ApplyVariant);
 		REGISTER(a_vm, ResetVariant);
+		REGISTER(a_vm, GetEquippedArmorsWithVariants);
 
 		return true;
 	}

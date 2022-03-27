@@ -1,7 +1,10 @@
 Scriptname DynamicArmor_Menu Hidden
 
 Function OpenMenu(Actor akActor) global
-	Armor[] wornArmors = GetWornArmors(akActor)
+	Armor[] wornArmors = DynamicArmor.GetEquippedArmorsWithVariants(akActor)
+	if wornArmors.Length == 0
+		return
+	endif
 
 	UIListMenu menu = Game.GetFormFromFile(0xE05, "UIExtensions.esp") as UIListMenu
 
@@ -15,7 +18,7 @@ Function OpenMenu(Actor akActor) global
 	Armor[] armorCache = new Armor[128]
 
 	int iArmor = 0
-	while iArmor < wornArmors.Length && wornArmors[iArmor] != None
+	while iArmor < wornArmors.Length
 		Armor wornArmor = wornArmors[iArmor]
 		string[] variants = DynamicArmor.GetVariants(wornArmor)
 		if variants.Length > 0
@@ -52,37 +55,4 @@ Function OpenMenu(Actor akActor) global
 		endif
 	endif
 
-EndFunction
-
-Armor[] Function GetWornArmors(Actor akActor) global
-	Armor[] wornArmors = new Armor[32]
-	int numWorn = 0
-
-	int slot = 30
-	while slot < 62
-		Armor wornArmor = akActor.GetEquippedArmorInSlot(slot)
-
-		if wornArmor
-			bool alreadyInList = false
-
-			int i = 0
-			while i < numWorn
-				if wornArmors[i] == wornArmor
-					alreadyInList = true
-					i = numWorn
-				endif
-
-				i += 1
-			endwhile
-
-			if !alreadyInList
-				wornArmors[numWorn] = wornArmor
-				numWorn += 1
-			endif
-		endif
-
-		slot += 1
-	endwhile
-
-	return wornArmors
 EndFunction

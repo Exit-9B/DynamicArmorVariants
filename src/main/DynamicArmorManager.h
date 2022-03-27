@@ -37,6 +37,8 @@ public:
 
 	void ResetVariant(RE::Actor* a_actor, const RE::TESObjectARMO* a_armor);
 
+	auto GetEquippedArmorsWithVariants(RE::Actor* a_actor) -> std::vector<RE::TESObjectARMO*>;
+
 private:
 	DynamicArmorManager() = default;
 

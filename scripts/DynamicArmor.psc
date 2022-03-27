@@ -15,3 +15,6 @@ Function ApplyVariant(Actor akActor, string asVariant) global native
 
 ; Resets an armor to its default appearance for the given character.
 Function ResetVariant(Actor akActor, Armor akArmor) global native
+
+; Gets all equipped armors with variants.
+Armor[] Function GetEquippedArmorsWithVariants(Actor akActor) global native
