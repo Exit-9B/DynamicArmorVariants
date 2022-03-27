@@ -22,8 +22,8 @@ dynamically at runtime.
 
 ## Building
 ```
-git clone https://github.com/Ryan-rsm-McKenzie/ExamplePlugin-CommonLibSSE
-cd ExamplePlugin-CommonLibSSE
+git clone https://github.com/Exit-9B/DynamicArmorVariants
+cd DynamicArmorVariants
 git submodule init
 git submodule update
 cmake --preset vs2022-windows
