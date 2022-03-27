@@ -68,7 +68,7 @@ void ConfigLoader::LoadConfig(fs::path a_path)
 	}
 }
 
-void ConfigLoader::LoadVariant(const std::string& a_name, Json::Value a_variant)
+void ConfigLoader::LoadVariant(std::string_view a_name, Json::Value a_variant)
 {
 	if (!a_variant.isObject())
 		return;
@@ -95,7 +95,7 @@ void ConfigLoader::LoadVariant(const std::string& a_name, Json::Value a_variant)
 }
 
 void ConfigLoader::LoadConditions(
-	const std::string& a_variant,
+	std::string_view a_variant,
 	Json::Value a_conditions,
 	const RefMap& a_refs)
 {
@@ -191,7 +191,7 @@ void ConfigLoader::LoadSlotMap(Json::Value a_replaceBySlot, ArmorVariant::SlotMa
 	}
 }
 
-auto ConfigLoader::ParseCondition(const std::string& a_text, const RefMap& a_refs)
+auto ConfigLoader::ParseCondition(std::string_view a_text, const RefMap& a_refs)
 	-> RE::TESConditionItem*
 {
 	static std::regex re{

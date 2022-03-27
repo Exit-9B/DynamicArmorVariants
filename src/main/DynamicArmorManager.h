@@ -13,8 +13,8 @@ public:
 
 	static auto GetSingleton() -> DynamicArmorManager*;
 
-	void RegisterArmorVariant(const std::string& a_name, ArmorVariant&& a_variant);
-	void SetCondition(const std::string& a_state, std::shared_ptr<RE::TESCondition> a_condition);
+	void RegisterArmorVariant(std::string_view a_name, ArmorVariant&& a_variant);
+	void SetCondition(std::string_view a_state, std::shared_ptr<RE::TESCondition> a_condition);
 
 	void VisitArmorAddons(
 		RE::Actor* a_actor,
@@ -28,7 +28,7 @@ public:
 
 	auto GetEquippedArmorsWithVariants(RE::Actor* a_actor) -> std::vector<RE::TESObjectARMO*>;
 
-	auto GetDisplayName(const std::string& a_variant) const -> const std::string&;
+	auto GetDisplayName(const std::string& a_variant) const -> std::string;
 
 	void ApplyVariant(RE::Actor* a_actor, const std::string& a_variant);
 

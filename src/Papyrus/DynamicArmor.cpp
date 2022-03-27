@@ -45,10 +45,10 @@ namespace Papyrus
 	{
 		REGISTER(a_vm, GetAPIVersion);
 		REGISTER(a_vm, GetVariants);
+		REGISTER(a_vm, GetEquippedArmorsWithVariants);
 		REGISTER(a_vm, GetDisplayName);
 		REGISTER(a_vm, ApplyVariant);
 		REGISTER(a_vm, ResetVariant);
-		REGISTER(a_vm, GetEquippedArmorsWithVariants);
 
 		return true;
 	}

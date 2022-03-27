@@ -15,10 +15,10 @@ public:
 private:
 	static void LoadConfig(fs::path a_path);
 
-	static void LoadVariant(const std::string& a_name, Json::Value a_variant);
+	static void LoadVariant(std::string_view a_name, Json::Value a_variant);
 
 	static void LoadConditions(
-		const std::string& a_variant,
+		std::string_view a_variant,
 		Json::Value a_conditions,
 		const RefMap& a_refs);
 
@@ -26,7 +26,6 @@ private:
 
 	static void LoadSlotMap(Json::Value a_replaceBySlot, ArmorVariant::SlotMap& a_slotMap);
 
-	static auto ParseCondition(
-		const std::string& a_text,
-		const RefMap& a_refs) -> RE::TESConditionItem*;
+	static auto ParseCondition(std::string_view a_text, const RefMap& a_refs)
+		-> RE::TESConditionItem*;
 };

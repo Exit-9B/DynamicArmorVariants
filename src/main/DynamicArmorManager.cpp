@@ -7,45 +7,46 @@ auto DynamicArmorManager::GetSingleton() -> DynamicArmorManager*
 	return std::addressof(singleton);
 }
 
-void DynamicArmorManager::RegisterArmorVariant(const std::string& a_name, ArmorVariant&& a_variant)
+void DynamicArmorManager::RegisterArmorVariant(std::string_view a_name, ArmorVariant&& a_variant)
 {
-	auto [it, inserted] = _variants.try_emplace(a_name, std::move(a_variant));
+	auto [it, inserted] = _variants.try_emplace(std::string(a_name), std::move(a_variant));
 
-	if (!inserted) {
-		auto& variant = it.value();
+	if (inserted)
+		return;
 
-		if (!a_variant.Linked.empty()) {
-			variant.Linked = a_variant.Linked;
-		}
+	auto& variant = it.value();
 
-		if (!a_variant.DisplayName.empty()) {
-			variant.DisplayName = a_variant.DisplayName;
-		}
+	if (!a_variant.Linked.empty()) {
+		variant.Linked = a_variant.Linked;
+	}
 
-		if (a_variant.ShowHead.has_value()) {
-			variant.ShowHead = a_variant.ShowHead.value();
-		}
+	if (!a_variant.DisplayName.empty()) {
+		variant.DisplayName = a_variant.DisplayName;
+	}
 
-		if (a_variant.ShowHair.has_value()) {
-			variant.ShowHair = a_variant.ShowHair.value();
-		}
+	if (a_variant.ShowHead.has_value()) {
+		variant.ShowHead = a_variant.ShowHead.value();
+	}
 
-		for (auto& [form, replacement] : a_variant.ReplaceByForm) {
-			variant.ReplaceByForm.insert_or_assign(form, replacement);
-			variant.ReplaceByForm[form] = replacement;
-		}
+	if (a_variant.ShowHair.has_value()) {
+		variant.ShowHair = a_variant.ShowHair.value();
+	}
 
-		for (auto& [slot, replacement] : a_variant.ReplaceBySlot) {
-			variant.ReplaceBySlot[slot] = replacement;
-		}
+	for (auto& [form, replacement] : a_variant.ReplaceByForm) {
+		variant.ReplaceByForm.insert_or_assign(form, replacement);
+		variant.ReplaceByForm[form] = replacement;
+	}
+
+	for (auto& [slot, replacement] : a_variant.ReplaceBySlot) {
+		variant.ReplaceBySlot[slot] = replacement;
 	}
 }
 
 void DynamicArmorManager::SetCondition(
-	const std::string& a_state,
+	std::string_view a_state,
 	std::shared_ptr<RE::TESCondition> a_condition)
 {
-	_conditions.insert_or_assign(a_state, a_condition);
+	_conditions.insert_or_assign(std::string(a_state), a_condition);
 }
 
 void DynamicArmorManager::VisitArmorAddons(
@@ -209,14 +210,13 @@ auto DynamicArmorManager::GetEquippedArmorsWithVariants(RE::Actor* a_actor)
 	return resultVector;
 }
 
-auto DynamicArmorManager::GetDisplayName(const std::string& a_variant) const -> const std::string&
+auto DynamicArmorManager::GetDisplayName(const std::string& a_variant) const -> std::string
 {
 	if (auto it = _variants.find(a_variant); it != _variants.end()) {
 		return it->second.DisplayName;
 	}
 
-	static std::string NOT_FOUND = ""s;
-	return NOT_FOUND;
+	return ""s;
 }
 
 void DynamicArmorManager::ApplyVariant(RE::Actor* a_actor, const std::string& a_variant)
