@@ -154,6 +154,32 @@ auto DynamicArmorManager::GetVariants(RE::TESObjectARMO* a_armor) const -> std::
 	return result;
 }
 
+auto DynamicArmorManager::GetEquippedArmorsWithVariants(RE::Actor* a_actor)
+	-> std::vector<RE::TESObjectARMO*>
+{
+	std::vector<RE::TESObjectARMO*> resultVector;
+	resultVector.reserve(32);
+
+	std::unordered_set<RE::TESObjectARMO*> resultSet;
+	resultSet.reserve(32);
+
+	for (std::uint32_t i = 0; i < 32; i++) {
+		auto slot = static_cast<BipedObjectSlot>(1 << i);
+
+		std::vector<std::string> variants;
+		if (auto armor = a_actor->GetWornArmor(slot)) {
+			variants = GetVariants(armor);
+			if (!variants.empty()) {
+				if (resultSet.insert(armor).second) {
+					resultVector.push_back(armor);
+				}
+			}
+		}
+	}
+
+	return resultVector;
+}
+
 auto DynamicArmorManager::GetDisplayName(const std::string& a_variant) const -> const std::string&
 {
 	if (auto it = _variants.find(a_variant); it != _variants.end()) {
@@ -279,30 +305,4 @@ void DynamicArmorManager::ResetVariant(RE::Actor* a_actor, const RE::TESObjectAR
 	}
 
 	Ext::Actor::Update3D(a_actor);
-}
-
-auto DynamicArmorManager::GetEquippedArmorsWithVariants(RE::Actor* a_actor)
-	-> std::vector<RE::TESObjectARMO*>
-{
-	std::vector<RE::TESObjectARMO*> resultVector;
-	resultVector.reserve(32);
-
-	std::unordered_set<RE::TESObjectARMO*> resultSet;
-	resultSet.reserve(32);
-
-	for (std::uint32_t i = 0; i < 32; i++) {
-		auto slot = static_cast<BipedObjectSlot>(1 << i);
-
-		std::vector<std::string> variants;
-		if (auto armor = a_actor->GetWornArmor(slot)) {
-			variants = GetVariants(armor);
-			if (!variants.empty()) {
-				if (resultSet.insert(armor).second) {
-					resultVector.push_back(armor);
-				}
-			}
-		}
-	}
-
-	return resultVector;
 }

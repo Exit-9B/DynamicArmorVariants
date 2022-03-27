@@ -26,6 +26,8 @@ public:
 
 	auto GetVariants(RE::TESObjectARMO* a_armor) const -> std::vector<std::string>;
 
+	auto GetEquippedArmorsWithVariants(RE::Actor* a_actor) -> std::vector<RE::TESObjectARMO*>;
+
 	auto GetDisplayName(const std::string& a_variant) const -> const std::string&;
 
 	void ApplyVariant(RE::Actor* a_actor, const std::string& a_variant);
@@ -36,8 +38,6 @@ public:
 		const std::string& a_variant);
 
 	void ResetVariant(RE::Actor* a_actor, const RE::TESObjectARMO* a_armor);
-
-	auto GetEquippedArmorsWithVariants(RE::Actor* a_actor) -> std::vector<RE::TESObjectARMO*>;
 
 private:
 	DynamicArmorManager() = default;
