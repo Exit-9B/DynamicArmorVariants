@@ -1,4 +1,5 @@
 #include "ConditionParser.h"
+#include "EnumLookup.h"
 
 auto ConditionParser::Parse(std::string_view a_text, const RefMap& a_refs) -> RE::TESConditionItem*
 {
@@ -117,19 +118,21 @@ auto ConditionParser::ParseParam(
 
 	switch (a_type) {
 	case RE::SCRIPT_PARAM_TYPE::kChar:
+		param.c = static_cast<char>(std::stoi(textCIS));
 	case RE::SCRIPT_PARAM_TYPE::kInt:
 		param.i = std::stoi(textCIS);
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kFloat:
 		param.f = std::stof(textCIS);
 		break;
+	case RE::SCRIPT_PARAM_TYPE::kInventoryObject:
+		param.form = LookupForm<RE::TESObject>(textCIS, a_refs);
+		break;
 	case RE::SCRIPT_PARAM_TYPE::kObjectRef:
 		param.form = LookupForm<RE::TESObjectREFR>(textCIS, a_refs);
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kActorValue:
-		if (auto it = ActorValueLookup.find(textCIS); it != ActorValueLookup.end()) {
-			param.i = util::to_underlying(it->second);
-		}
+		param.i = util::to_underlying(EnumLookup::LookupActorValue(textCIS));
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kActor:
 		param.form = LookupForm<RE::Actor>(textCIS, a_refs);
@@ -138,15 +141,7 @@ auto ConditionParser::ParseParam(
 		param.form = LookupForm<RE::SpellItem>(textCIS, a_refs);
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kAxis:
-		if (textCIS == "X"s) {
-			param.i = 0;
-		}
-		else if (textCIS == "Y"s) {
-			param.i = 1;
-		}
-		else if (textCIS == "Z"s) {
-			param.i = 2;
-		}
+		param.i = EnumLookup::LookupAxis(textCIS);
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kCell:
 		param.form = LookupForm<RE::TESObjectCELL>(textCIS, a_refs);
@@ -167,12 +162,8 @@ auto ConditionParser::ParseParam(
 		param.form = LookupForm<RE::TESFaction>(textCIS, a_refs);
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kSex:
-		if (textCIS == "MALE"s) {
-			param.i = RE::SEX::kMale;
-		}
-		else if (textCIS == "FEMALE"s) {
-			param.i = RE::SEX::kFemale;
-		}
+		param.i = EnumLookup::LookupSex(textCIS);
+		break;
 	case RE::SCRIPT_PARAM_TYPE::kGlobal:
 		param.form = LookupForm<RE::TESGlobal>(textCIS, a_refs);
 		break;
@@ -180,26 +171,11 @@ auto ConditionParser::ParseParam(
 		param.i = std::stoi(textCIS);
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kCastingSource:
-		if (textCIS == "LEFT"s) {
-			param.i = util::to_underlying(RE::MagicSystem::CastingSource::kLeftHand);
-		}
-		else if (textCIS == "RIGHT"s) {
-			param.i = util::to_underlying(RE::MagicSystem::CastingSource::kRightHand);
-		}
-		else if (textCIS == "VOICE"s) {
-			param.i = util::to_underlying(RE::MagicSystem::CastingSource::kOther);
-		}
-		else if (textCIS == "INSTANT"s) {
-			param.i = util::to_underlying(RE::MagicSystem::CastingSource::kInstant);
-		}
+		param.i = util::to_underlying(EnumLookup::LookupCastingSource(textCIS));
 		break;
 	default:
 		param.form = LookupForm(textCIS, a_refs);
 		break;
-	}
-
-	if (param.form == nullptr) {
-		logger::warn("Failed to resolve param: {}"sv, a_text);
 	}
 
 	return param;
