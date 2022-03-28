@@ -47,7 +47,7 @@ void ConfigLoader::LoadConfig(fs::path a_path)
 		for (auto& state : states) {
 			auto variant = state["variant"].asString();
 
-			RefMap refMap;
+			ConditionParser::RefMap refMap;
 			refMap["PLAYER"s] = RE::PlayerCharacter::GetSingleton();
 
 			Json::Value refs = state["refs"];
@@ -97,7 +97,7 @@ void ConfigLoader::LoadVariant(std::string_view a_name, Json::Value a_variant)
 void ConfigLoader::LoadConditions(
 	std::string_view a_variant,
 	Json::Value a_conditions,
-	const RefMap& a_refs)
+	const ConditionParser::RefMap& a_refs)
 {
 	if (!a_conditions.isArray())
 		return;
@@ -111,7 +111,7 @@ void ConfigLoader::LoadConditions(
 		if (text.empty())
 			continue;
 
-		if (auto conditionItem = ParseCondition(text, a_refs)) {
+		if (auto conditionItem = ConditionParser::Parse(text, a_refs)) {
 			*head = conditionItem;
 			head = std::addressof(conditionItem->next);
 		}
@@ -144,6 +144,9 @@ void ConfigLoader::LoadFormMap(Json::Value a_replaceByForm, ArmorVariant::FormMa
 
 				a_formMap[addon].push_back(variantAddon);
 			}
+			else {
+				logger::warn("Could not resolve form: {}"sv, addons.asString());
+			}
 		}
 		else if (addons.isArray()) {
 			for (auto& identifier : addons) {
@@ -151,6 +154,9 @@ void ConfigLoader::LoadFormMap(Json::Value a_replaceByForm, ArmorVariant::FormMa
 						identifier.asString())) {
 
 					a_formMap[addon].push_back(variantAddon);
+				}
+				else {
+					logger::warn("Could not resolve form: {}"sv, identifier.asString());
 				}
 			}
 		}
@@ -189,105 +195,4 @@ void ConfigLoader::LoadSlotMap(Json::Value a_replaceBySlot, ArmorVariant::SlotMa
 			}
 		}
 	}
-}
-
-auto ConfigLoader::ParseCondition(std::string_view a_text, const RefMap& a_refs)
-	-> RE::TESConditionItem*
-{
-	static std::regex re{
-		R"((\w+)\s+((\w+)(\s+(\w+))?\s*)?(==|!=|>|>=|<|<=)\s*(\w+)(\s+(AND|OR))?)"
-	};
-
-	std::cmatch m;
-	if (!std::regex_match(a_text.data(), m, re)) {
-		logger::error("Could not parse condition: {}"sv, a_text);
-		return nullptr;
-	}
-
-	RE::CONDITION_ITEM_DATA data;
-	auto& mFunction = m[1];
-	auto& mParam1 = m[3];
-	auto& mParam2 = m[5];
-	auto& mOperator = m[6];
-	auto& mComparand = m[7];
-	auto& mConnective = m[9];
-
-	auto function = RE::SCRIPT_FUNCTION::LocateScriptCommand(mFunction.str().data());
-
-	if (!function || !function->conditionFunction) {
-		logger::error("Did not find condition function: {}"sv, mFunction.str());
-		return nullptr;
-	}
-
-	auto functionIndex = util::to_underlying(function->output) - 0x1000;
-	data.functionData.function = static_cast<RE::FUNCTION_DATA::FunctionID>(functionIndex);
-
-	if (mParam1.matched) {
-		auto param = util::str_toupper(mParam1.str());
-		if (auto it = a_refs.find(param); it != a_refs.end()) {
-			data.functionData.params[0] = it->second;
-		}
-		else if (auto form = RE::TESForm::LookupByEditorID(param)) {
-			data.functionData.params[0] = form;
-		}
-	}
-
-	if (mParam2.matched) {
-		auto param = util::str_toupper(mParam2.str());
-		if (auto it = a_refs.find(param); it != a_refs.end()) {
-			data.functionData.params[1] = it->second;
-		}
-		else if (auto form = RE::TESForm::LookupByEditorID(param)) {
-			data.functionData.params[1] = form;
-		}
-	}
-
-	if (mOperator.matched) {
-		auto op = mOperator.str();
-		if (op == "=="s) {
-			data.flags.opCode = RE::CONDITION_ITEM_DATA::OpCode::kEqualTo;
-		}
-		else if (op == "!="s) {
-			data.flags.opCode = RE::CONDITION_ITEM_DATA::OpCode::kNotEqualTo;
-		}
-		else if (op == ">"s) {
-			data.flags.opCode = RE::CONDITION_ITEM_DATA::OpCode::kGreaterThan;
-		}
-		else if (op == ">="s) {
-			data.flags.opCode = RE::CONDITION_ITEM_DATA::OpCode::kGreaterThanOrEqualTo;
-		}
-		else if (op == "<"s) {
-			data.flags.opCode = RE::CONDITION_ITEM_DATA::OpCode::kLessThan;
-		}
-		else if (op == "<="s) {
-			data.flags.opCode = RE::CONDITION_ITEM_DATA::OpCode::kLessThanOrEqualTo;
-		}
-	}
-	else {
-		data.flags.opCode = RE::CONDITION_ITEM_DATA::OpCode::kNotEqualTo;
-	}
-
-	if (mComparand.matched) {
-		auto comparand = mComparand.str();
-		if (auto global = RE::TESForm::LookupByEditorID<RE::TESGlobal>(comparand)) {
-			data.comparisonValue.g = global;
-		}
-		else {
-			data.comparisonValue.f = std::stof(comparand);
-		}
-	}
-	else {
-		data.comparisonValue.f = 0.f;
-	}
-
-	if (mConnective.matched) {
-		auto connective = mConnective.str();
-		if (connective == "OR"s) {
-			data.flags.isOR = true;
-		}
-	}
-
-	auto conditionItem = new RE::TESConditionItem();
-	conditionItem->data = data;
-	return conditionItem;
 }
