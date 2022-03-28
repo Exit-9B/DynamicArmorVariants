@@ -10,6 +10,8 @@ dynamically at runtime.
 	* Desktop development with C++
 * [SKSE64 SDK](https://skse.silverlock.org/)
 	* Add the environment variable `SKSE64Path`
+* [MCM Helper SDK](https://github.com/Exit-9B/MCM-Helper/releases)
+	* Add the environment variable `MCMPath`
 * [UIExtensions SDK](https://www.nexusmods.com/skyrimspecialedition/mods/17561)
 	* Extract the BSA using your favorite tool (e.g.
 	[Bethesda Archive Extractor](https://www.nexusmods.com/skyrimspecialedition/mods/974))

@@ -139,9 +139,10 @@ add_papyrus(
 	"Papyrus"
 	GAME ${Skyrim64Path}
 	IMPORTS
-		${CMAKE_CURRENT_SOURCE_DIR}/scripts
-		$ENV{UIExtensionsPath}/scripts/source
-		$ENV{SKSE64Path}/Scripts/Source
+		"${CMAKE_CURRENT_SOURCE_DIR}/scripts"
+		"$ENV{UIExtensionsPath}/scripts/source"
+		"$ENV{MCMPath}/Source/Scripts"
+		"$ENV{SKSE64Path}/Scripts/Source"
 	SOURCES ${Papyrus_SOURCES}
 	OPTIMIZE
 	ANONYMIZE
@@ -162,4 +163,29 @@ install(
 install(
 	FILES ${Papyrus_OUTPUT}
 	DESTINATION "Scripts"
+)
+
+install(
+	FILES
+		"${CMAKE_CURRENT_SOURCE_DIR}/data/DynamicArmorMenu.esp"
+	DESTINATION "."
+)
+
+install(
+	FILES
+		"${CMAKE_CURRENT_SOURCE_DIR}/data/MCM/Config/DynamicArmorMenu/config.json"
+		"${CMAKE_CURRENT_SOURCE_DIR}/data/MCM/Config/DynamicArmorMenu/keybinds.json"
+	DESTINATION "MCM/Config/DynamicArmorMenu"
+)
+
+install(
+	FILES
+		"${CMAKE_CURRENT_SOURCE_DIR}/data/MCM/Settings/DynamicArmorMenu.ini"
+	DESTINATION "MCM/Settings"
+)
+
+install(
+	FILES
+		"${CMAKE_CURRENT_SOURCE_DIR}/data/Interface/Translations/DynamicArmorMenu_ENGLISH.txt"
+	DESTINATION "Interface/Translations"
 )

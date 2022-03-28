@@ -1,0 +1,14 @@
+$DAV_AddSpellCrosshair	Add NPC Customization Spell
+$DAV_AddSpellPlayer	Add Player Customization Power
+$DAV_Help_AddSpellCrosshair	Add an Alteration spell to customize NPC equipment.
+$DAV_Help_AddSpellPlayer	Add a Lesser Power to customize your equipment.
+$DAV_Help_HotkeyCrosshair	Set a hotkey for customizing the equipment of an NPC in your crosshair.
+$DAV_Help_HotkeyPlayer	Set a hotkey for customizing your equipment.
+$DAV_Help_RemoveSpellCrosshair	Remove the spell for customizing NPC equipment.
+$DAV_Help_RemoveSpellPlayer	Remove the power for customizing your equipment.
+$DAV_HotkeyCrosshair	Customize Crosshair Target's Armor
+$DAV_HotkeyPlayer	Customize Player Armor
+$DAV_Hotkeys	Hotkeys
+$DAV_RemoveSpellCrosshair	Remove NPC Customization Spell
+$DAV_RemoveSpellPlayer	Remove Player Customization Power
+$DAV_Spells	Spells

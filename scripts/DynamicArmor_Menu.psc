@@ -3,6 +3,8 @@ Scriptname DynamicArmor_Menu Hidden
 Function OpenMenu(Actor akActor) global
 	Armor[] wornArmors = DynamicArmor.GetEquippedArmorsWithVariants(akActor)
 	if wornArmors.Length == 0
+		Message DAV_NoVariants = Game.GetFormFromFile(0x805, "DynamicArmorMenu.esp") as Message
+		DAV_NoVariants.Show()
 		return
 	endif
 
@@ -11,6 +13,9 @@ Function OpenMenu(Actor akActor) global
 	if menu
 		menu.ResetMenu()
 	else
+		Message DAV_UIExtensions_NotFound = \
+			Game.GetFormFromFile(0x806, "DynamicArmorMenu.esp") as Message
+		DAV_UIExtensions_NotFound.Show()
 		return
 	endif
 
@@ -55,4 +60,15 @@ Function OpenMenu(Actor akActor) global
 		endif
 	endif
 
+EndFunction
+
+Function OpenPlayerMenu() global
+	OpenMenu(Game.GetForm(0x14) as Actor)
+EndFunction
+
+Function OpenCrosshairTargetMenu() global
+	Actor target = Game.GetCurrentCrosshairRef() as Actor
+	if target
+		OpenMenu(target)
+	endif
 EndFunction

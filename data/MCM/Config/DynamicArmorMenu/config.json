@@ -1,0 +1,88 @@
+{
+  "modName": "DynamicArmorMenu",
+  "displayName": "Dynamic Armor Variants",
+  "cursorFillMode": "topToBottom",
+  "content": [
+    {
+      "text": "$DAV_Hotkeys",
+      "type": "header"
+    },
+    {
+      "id": "DAV_menu_player",
+      "text": "$DAV_HotkeyPlayer",
+      "type": "keymap",
+      "help": "$DAV_Help_HotkeyPlayer"
+    },
+    {
+      "id": "DAV_menu_crosshair",
+      "text": "$DAV_HotkeyCrosshair",
+      "type": "keymap",
+      "help": "$DAV_Help_HotkeyCrosshair"
+    },
+    {
+      "text": "$DAV_Spells",
+      "type": "header",
+      "position": 1
+    },
+    {
+      "type": "hiddenToggle",
+      "groupControl": 1,
+      "valueOptions": {
+        "sourceType": "PropertyValueBool",
+        "propertyName": "PlayerHasConfigPower"
+      }
+    },
+    {
+      "text": "$DAV_AddSpellPlayer",
+      "type": "text",
+      "help": "$DAV_Help_AddSpellPlayer",
+      "groupCondition": { "NOT": 1 },
+      "groupBehavior": "skip",
+      "action": {
+        "type": "CallFunction",
+        "function": "AddPower"
+      }
+    },
+    {
+      "text": "$DAV_RemoveSpellPlayer",
+      "type": "text",
+      "help": "$DAV_Help_RemoveSpellPlayer",
+      "groupCondition": 1,
+      "groupBehavior": "skip",
+      "action": {
+        "type": "CallFunction",
+        "function": "RemovePower"
+      }
+    },
+    {
+      "type": "hiddenToggle",
+      "groupControl": 2,
+      "valueOptions": {
+        "sourceType": "PropertyValueBool",
+        "propertyName": "PlayerHasNPCConfigSpell"
+      }
+    },
+    {
+      "text": "$DAV_AddSpellCrosshair",
+      "type": "text",
+      "help": "$DAV_Help_AddSpellCrosshair",
+      "groupCondition": { "NOT": 2 },
+      "groupBehavior": "skip",
+      "action": {
+        "type": "CallFunction",
+        "function": "AddNPCSpell"
+      }
+    },
+    {
+      "text": "$DAV_RemoveSpellCrosshair",
+      "type": "text",
+      "help": "$DAV_Help_RemoveSpellCrosshair",
+      "groupCondition": 2,
+      "groupBehavior": "skip",
+      "action": {
+        "type": "CallFunction",
+        "function": "RemoveNPCSpell"
+      }
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "modName": "DynamicArmorMenu",
+  "keybinds": [
+    {
+      "id": "DAV_menu_player",
+      "desc": "Customize your equipment",
+      "action": {
+        "type": "CallGlobalFunction",
+        "script": "DynamicArmor_Menu",
+        "function": "OpenPlayerMenu"
+      }
+    },
+    {
+      "id": "DAV_menu_crosshair",
+      "desc": "Customize crosshair target's equipment",
+      "action": {
+        "type": "CallGlobalFunction",
+        "script": "DynamicArmor_Menu",
+        "function": "OpenCrosshairTargetMenu"
+      }
+    }
+  ]
+}
