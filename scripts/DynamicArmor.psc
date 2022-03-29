@@ -16,5 +16,8 @@ string Function GetDisplayName(string asVariant) global native
 ; This will take precedence over dynamic states.
 Function ApplyVariant(Actor akActor, string asVariant) global native
 
-; Resets an armor to its default appearance for the given character.
+; Resets an armor to its default/dynamic appearance for the given character.
 Function ResetVariant(Actor akActor, Armor akArmor) global native
+
+; Resets all armor variants to default/dynamic for the given character.
+Function ResetAllVariants(Actor akActor) global native

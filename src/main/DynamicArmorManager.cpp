@@ -253,7 +253,7 @@ void DynamicArmorManager::ApplyVariant(RE::Actor* a_actor, const std::string& a_
 	// Remove previous overrides that affect the same armor items
 	auto [elem, inserted] = _variantOverrides.try_emplace(
 		a_actor,
-		tsl::ordered_set<std::string>());
+		std::unordered_set<std::string>());
 
 	auto& overrides = elem->second;
 
@@ -297,7 +297,7 @@ void DynamicArmorManager::ApplyVariant(
 	// Remove previous overrides that affect the armor
 	auto [elem, inserted] = _variantOverrides.try_emplace(
 		a_actor,
-		tsl::ordered_set<std::string>());
+		std::unordered_set<std::string>());
 
 	auto& overrides = elem->second;
 
@@ -319,11 +319,11 @@ void DynamicArmorManager::ApplyVariant(
 
 void DynamicArmorManager::ResetVariant(RE::Actor* a_actor, const RE::TESObjectARMO* a_armor)
 {
-	auto [elem, inserted] = _variantOverrides.try_emplace(
-		a_actor,
-		tsl::ordered_set<std::string>());
+	auto it = _variantOverrides.find(a_actor);
+	if (it == _variantOverrides.end())
+		return;
 
-	auto& overrides = elem->second;
+	auto& overrides = it->second;
 
 	for (auto& [name, variant] : _variants) {
 		if (overrides.contains(name)) {
@@ -333,5 +333,11 @@ void DynamicArmorManager::ResetVariant(RE::Actor* a_actor, const RE::TESObjectAR
 		}
 	}
 
+	Ext::Actor::Update3DSafe(a_actor);
+}
+
+void DynamicArmorManager::ResetAllVariants(RE::Actor* a_actor)
+{
+	_variantOverrides.erase(a_actor);
 	Ext::Actor::Update3DSafe(a_actor);
 }

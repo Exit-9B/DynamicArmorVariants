@@ -46,11 +46,15 @@ Function OpenMenu(Actor akActor) global
 		iArmor += 1
 	endwhile
 
+	int resetEntry = menu.AddEntryItem("$DAV_ResetAllToDefault")
+
 	; I think it's supposed to return 1, but in testing I get 0
 	int ret = menu.OpenMenu()
 
 	int result = menu.GetResultInt()
-	if result >= 0
+	if result == resetEntry
+		DynamicArmor.ResetAllVariants(akActor)
+	elseif result >= 0
 		string variant = variantCache[result]
 		Armor wornArmor = armorCache[result]
 		if variant != ""

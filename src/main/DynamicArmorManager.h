@@ -39,6 +39,8 @@ public:
 
 	void ResetVariant(RE::Actor* a_actor, const RE::TESObjectARMO* a_armor);
 
+	void ResetAllVariants(RE::Actor* a_actor);
+
 private:
 	DynamicArmorManager() = default;
 
@@ -47,5 +49,5 @@ private:
 	tsl::ordered_map<std::string, ArmorVariant> _variants;
 
 	std::unordered_map<std::string, std::shared_ptr<RE::TESCondition>> _conditions;
-	std::unordered_map<RE::Actor*, tsl::ordered_set<std::string>> _variantOverrides;
+	std::unordered_map<RE::Actor*, std::unordered_set<std::string>> _variantOverrides;
 };

@@ -18,6 +18,8 @@ namespace Papyrus
 
 		void ResetVariant(RE::StaticFunctionTag*, RE::Actor* a_actor, RE::TESObjectARMO* a_armor);
 
+		void ResetAllVariants(RE::StaticFunctionTag*, RE::Actor* a_actor);
+
 		bool RegisterFuncs(RE::BSScript::IVirtualMachine* a_vm);
 	}
 }

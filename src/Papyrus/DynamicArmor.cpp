@@ -41,6 +41,11 @@ namespace Papyrus
 		DynamicArmorManager::GetSingleton()->ResetVariant(a_actor, a_armor);
 	}
 
+	void DynamicArmor::ResetAllVariants(RE::StaticFunctionTag*, RE::Actor* a_actor)
+	{
+		DynamicArmorManager::GetSingleton()->ResetAllVariants(a_actor);
+	}
+
 	bool DynamicArmor::RegisterFuncs(RE::BSScript::IVirtualMachine* a_vm)
 	{
 		REGISTER(a_vm, GetAPIVersion);
@@ -49,6 +54,7 @@ namespace Papyrus
 		REGISTER(a_vm, GetDisplayName);
 		REGISTER(a_vm, ApplyVariant);
 		REGISTER(a_vm, ResetVariant);
+		REGISTER(a_vm, ResetAllVariants);
 
 		return true;
 	}

@@ -11,4 +11,5 @@ $DAV_HotkeyPlayer	Customize Player Armor
 $DAV_Hotkeys	Hotkeys
 $DAV_RemoveSpellCrosshair	Remove NPC Customization Spell
 $DAV_RemoveSpellPlayer	Remove Player Customization Power
+$DAV_ResetAllToDefault	Reset all to default
 $DAV_Spells	Spells
