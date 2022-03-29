@@ -9,4 +9,9 @@ namespace Ext
 		static REL::Relocation<func_t> func{ RE::Offset::Actor::Update3D };
 		return func(a_actor);
 	}
+
+	void Actor::Update3DSafe(RE::Actor* a_actor)
+	{
+		SKSE::GetTaskInterface()->AddUITask(std::bind(&Actor::Update3D, a_actor));
+	}
 }

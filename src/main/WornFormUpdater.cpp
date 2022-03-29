@@ -21,7 +21,7 @@ auto WornFormUpdater::ProcessEvent(
 {
 	auto& actor = a_event->actor;
 	if (actor && actor->Is3DLoaded()) {
-		Ext::Actor::Update3D(actor);
+		Ext::Actor::Update3DSafe(actor);
 	}
 
 	return RE::BSEventNotifyControl::kContinue;
@@ -34,7 +34,7 @@ auto WornFormUpdater::ProcessEvent(
 {
 	auto actor = a_event->actor.get()->As<RE::Actor>();
 	if (actor && actor->Is3DLoaded()) {
-		Ext::Actor::Update3D(actor);
+		Ext::Actor::Update3DSafe(actor);
 	}
 
 	return RE::BSEventNotifyControl::kContinue;
@@ -47,7 +47,7 @@ auto WornFormUpdater::ProcessEvent(
 {
 	auto target = a_event->target.get()->As<RE::Actor>();
 	if (target && target->Is3DLoaded()) {
-		Ext::Actor::Update3D(target);
+		Ext::Actor::Update3DSafe(target);
 	}
 
 	return RE::BSEventNotifyControl::kContinue;

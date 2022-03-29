@@ -273,7 +273,7 @@ void DynamicArmorManager::ApplyVariant(RE::Actor* a_actor, const std::string& a_
 
 	// Add the new override
 	overrides.insert(a_variant);
-	Ext::Actor::Update3D(a_actor);
+	Ext::Actor::Update3DSafe(a_actor);
 }
 
 void DynamicArmorManager::ApplyVariant(
@@ -314,7 +314,7 @@ void DynamicArmorManager::ApplyVariant(
 
 	// Add the new override
 	overrides.insert(a_variant);
-	Ext::Actor::Update3D(a_actor);
+	Ext::Actor::Update3DSafe(a_actor);
 }
 
 void DynamicArmorManager::ResetVariant(RE::Actor* a_actor, const RE::TESObjectARMO* a_armor)
@@ -333,5 +333,5 @@ void DynamicArmorManager::ResetVariant(RE::Actor* a_actor, const RE::TESObjectAR
 		}
 	}
 
-	Ext::Actor::Update3D(a_actor);
+	Ext::Actor::Update3DSafe(a_actor);
 }
