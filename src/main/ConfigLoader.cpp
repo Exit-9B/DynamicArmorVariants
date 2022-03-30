@@ -140,14 +140,14 @@ void ConfigLoader::LoadFormMap(Json::Value a_replaceByForm, ArmorVariant::FormMa
 		if (!addon)
 			continue;
 
-		a_formMap.emplace(addon, std::vector<RE::TESObjectARMA*>());
+		std::vector<RE::TESObjectARMA*> replacementForms;
 
 		Json::Value addons = a_replaceByForm[formIdentifier];
 		if (addons.isString()) {
 			if (auto variantAddon = FormUtil::LookupByIdentifier<RE::TESObjectARMA>(
 					addons.asString())) {
 
-				a_formMap[addon].push_back(variantAddon);
+				replacementForms.push_back(variantAddon);
 			}
 			else {
 				logger::warn("Could not resolve form: {}"sv, addons.asString());
@@ -158,12 +158,19 @@ void ConfigLoader::LoadFormMap(Json::Value a_replaceByForm, ArmorVariant::FormMa
 				if (auto variantAddon = FormUtil::LookupByIdentifier<RE::TESObjectARMA>(
 						identifier.asString())) {
 
-					a_formMap[addon].push_back(variantAddon);
+					replacementForms.push_back(variantAddon);
 				}
 				else {
 					logger::warn("Could not resolve form: {}"sv, identifier.asString());
 				}
 			}
+		}
+
+		if (!replacementForms.empty()) {
+			a_formMap.emplace(addon, std::move(replacementForms));
+		}
+		else {
+			logger::warn("Replacements for {} are not valid, ignoring"sv, formIdentifier);
 		}
 	}
 }
