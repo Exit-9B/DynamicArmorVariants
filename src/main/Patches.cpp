@@ -3,10 +3,10 @@
 
 void Patches::WriteInitWornPatch(InitWornArmorFunc* a_func)
 {
-	REL::Relocation<std::uintptr_t> hook{ RE::Offset::TESNPC::InitWornForm, 0x2F0 };
+	auto hook = util::MakeHook(RE::Offset::TESNPC::InitWornForm, 0x2F0);
 
 	// Expected size: 0x12
-	struct Patch : Xbyak::CodeGenerator
+	struct Patch : public Xbyak::CodeGenerator
 	{
 		Patch(std::uintptr_t a_funcAddr)
 		{
@@ -30,10 +30,10 @@ void Patches::WriteInitWornPatch(InitWornArmorFunc* a_func)
 
 void Patches::WriteGetWornMaskPatch(GetWornMaskFunc* a_func)
 {
-	REL::Relocation<std::uintptr_t> hook{ RE::Offset::InventoryChanges::GetWornMask };
+	auto hook = util::MakeHook(RE::Offset::InventoryChanges::GetWornMask);
 
 	// Expected size: 0x15
-	struct Patch : Xbyak::CodeGenerator
+	struct Patch : public Xbyak::CodeGenerator
 	{
 		Patch(std::uintptr_t a_funcAddr)
 		{
