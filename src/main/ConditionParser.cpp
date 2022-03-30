@@ -118,57 +118,22 @@ auto ConditionParser::ParseParam(
 
 	switch (a_type) {
 	case RE::SCRIPT_PARAM_TYPE::kChar:
-		param.c = static_cast<char>(std::stoi(textCIS));
 	case RE::SCRIPT_PARAM_TYPE::kInt:
+	case RE::SCRIPT_PARAM_TYPE::kStage:
+	case RE::SCRIPT_PARAM_TYPE::kRelationshipRank:
 		param.i = std::stoi(textCIS);
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kFloat:
 		param.f = std::stof(textCIS);
 		break;
-	case RE::SCRIPT_PARAM_TYPE::kInventoryObject:
-		param.form = LookupForm<RE::TESObject>(textCIS, a_refs);
-		break;
-	case RE::SCRIPT_PARAM_TYPE::kObjectRef:
-		param.form = LookupForm<RE::TESObjectREFR>(textCIS, a_refs);
-		break;
 	case RE::SCRIPT_PARAM_TYPE::kActorValue:
 		param.i = util::to_underlying(EnumLookup::LookupActorValue(textCIS));
-		break;
-	case RE::SCRIPT_PARAM_TYPE::kActor:
-		param.form = LookupForm<RE::Actor>(textCIS, a_refs);
-		break;
-	case RE::SCRIPT_PARAM_TYPE::kSpellItem:
-		param.form = LookupForm<RE::SpellItem>(textCIS, a_refs);
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kAxis:
 		param.i = EnumLookup::LookupAxis(textCIS);
 		break;
-	case RE::SCRIPT_PARAM_TYPE::kCell:
-		param.form = LookupForm<RE::TESObjectCELL>(textCIS, a_refs);
-		break;
-	case RE::SCRIPT_PARAM_TYPE::kMagicItem:
-		param.form = LookupForm<RE::MagicItem>(textCIS, a_refs);
-		break;
-	case RE::SCRIPT_PARAM_TYPE::kQuest:
-		param.form = LookupForm<RE::TESQuest>(textCIS, a_refs);
-		break;
-	case RE::SCRIPT_PARAM_TYPE::kRace:
-		param.form = LookupForm<RE::TESRace>(textCIS, a_refs);
-		break;
-	case RE::SCRIPT_PARAM_TYPE::kClass:
-		param.form = LookupForm<RE::TESClass>(textCIS, a_refs);
-		break;
-	case RE::SCRIPT_PARAM_TYPE::kFaction:
-		param.form = LookupForm<RE::TESFaction>(textCIS, a_refs);
-		break;
 	case RE::SCRIPT_PARAM_TYPE::kSex:
 		param.i = EnumLookup::LookupSex(textCIS);
-		break;
-	case RE::SCRIPT_PARAM_TYPE::kGlobal:
-		param.form = LookupForm<RE::TESGlobal>(textCIS, a_refs);
-		break;
-	case RE::SCRIPT_PARAM_TYPE::kStage:
-		param.i = std::stoi(textCIS);
 		break;
 	case RE::SCRIPT_PARAM_TYPE::kCastingSource:
 		param.i = util::to_underlying(EnumLookup::LookupCastingSource(textCIS));
