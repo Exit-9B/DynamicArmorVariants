@@ -2,13 +2,12 @@
 
 #pragma warning(disable : 5105)
 #pragma warning(push, 0)
+#include <srell.hpp>
 #include <tsl/ordered_map.h>
 #include <tsl/ordered_set.h>
 
 #include <RE/Skyrim.h>
 #include <SKSE/SKSE.h>
-
-#include <regex>
 
 #ifdef NDEBUG
 #include <spdlog/sinks/basic_file_sink.h>

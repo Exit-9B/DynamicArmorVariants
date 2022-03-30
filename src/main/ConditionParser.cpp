@@ -3,12 +3,12 @@
 
 auto ConditionParser::Parse(std::string_view a_text, const RefMap& a_refs) -> RE::TESConditionItem*
 {
-	static std::regex re{
+	static srell::regex re{
 		R"((\w+)\s+((\w+)(\s+(\w+))?\s*)?(==|!=|>|>=|<|<=)\s*(\w+)(\s+(AND|OR))?)"
 	};
 
-	std::cmatch m;
-	if (!std::regex_match(a_text.data(), m, re)) {
+	srell::cmatch m;
+	if (!srell::regex_match(a_text.data(), m, re)) {
 		logger::error("Could not parse condition: {}"sv, a_text);
 		return nullptr;
 	}

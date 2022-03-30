@@ -29,7 +29,12 @@ void ConfigLoader::LoadConfig(fs::path a_path)
 		return;
 
 	Json::Value root;
-	fileStream >> root;
+	try {
+		fileStream >> root;
+	}
+	catch (...) {
+		logger::error("Parse errors in file: {}"sv, a_path.filename().string());
+	}
 
 	if (!root.isObject())
 		return;

@@ -116,10 +116,17 @@ add_compile_definitions(SKSE_SUPPORT_XBYAK)
 
 add_subdirectory("external/CommonLibSSE" CommonLibSSE EXCLUDE_FROM_ALL)
 
+find_path(SRELL_INCLUDE_DIRS "srell.hpp")
 find_package(jsoncpp CONFIG REQUIRED)
 find_package(spdlog CONFIG REQUIRED)
 find_package(tsl-ordered-map CONFIG REQUIRED)
 find_package(xbyak CONFIG REQUIRED)
+
+target_include_directories(
+	${PROJECT_NAME}
+	PRIVATE
+		${SRELL_INCLUDE_DIRS}
+)
 
 target_link_libraries(
 	${PROJECT_NAME}
