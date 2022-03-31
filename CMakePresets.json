@@ -43,6 +43,17 @@
       "name": "windows"
     },
     {
+      "binaryDir": "${sourceDir}/buildVR",
+      "cacheVariables": {
+        "BUILD_SKYRIMVR": {
+          "type": "BOOL",
+          "value": "ON"
+        }
+      },
+      "hidden": true,
+      "name": "vr"
+    },
+    {
       "architecture": {
         "strategy": "set",
         "value": "x64"
@@ -60,6 +71,13 @@
       "toolset": "v142"
     },
     {
+      "inherits": [
+        "vr",
+        "vs2019-windows"
+      ],
+      "name": "vs2019-windows-vr"
+    },
+    {
       "architecture": {
         "strategy": "set",
         "value": "x64"
@@ -75,6 +93,13 @@
       ],
       "name": "vs2022-windows",
       "toolset": "v143"
+    },
+    {
+      "inherits": [
+        "vr",
+        "vs2022-windows"
+      ],
+      "name": "vs2022-windows-vr"
     }
   ],
   "version": 3

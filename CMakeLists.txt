@@ -15,21 +15,36 @@ if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
 	)
 endif()
 
+option(BUILD_SKYRIMVR "Build the mod for Skyrim VR" OFF)
+
+if(CMAKE_GENERATOR MATCHES "Visual Studio")
+	option(CMAKE_VS_INCLUDE_INSTALL_TO_DEFAULT_BUILD "Include INSTALL target to default build." OFF)
+endif()
+
 get_filename_component(
 	Skyrim64Path
 	"[HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Bethesda Softworks\\Skyrim Special Edition;installed path]"
 	ABSOLUTE CACHE
 )
 
+get_filename_component(
+	SkyrimVRPath
+	"[HKEY_LOCAL_MACHINE\\SOFTWARE\\WOW6432Node\\Bethesda Softworks\\Skyrim VR;installed path]"
+	ABSOLUTE CACHE
+)
+
+if(BUILD_SKYRIMVR)
+	add_compile_definitions(SKYRIMVR)
+	set(GAME_DIR ${SkyrimVRPath})
+else()
+	set(GAME_DIR ${Skyrim64Path})
+endif()
+
 if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-	set(CMAKE_INSTALL_PREFIX "${Skyrim64Path}/Data" CACHE PATH
+	set(CMAKE_INSTALL_PREFIX "${GAME_DIR}/Data" CACHE PATH
 		"Install path prefix (e.g. Skyrim Data directory or Mod Organizer virtual directory)."
 		FORCE
 	)
-endif()
-
-if(CMAKE_GENERATOR MATCHES "Visual Studio")
-	option(CMAKE_VS_INCLUDE_INSTALL_TO_DEFAULT_BUILD "Include INSTALL target to default build." OFF)
 endif()
 
 list(APPEND CMAKE_IGNORE_PATH "${PROJECT_BINARY_DIR}")
