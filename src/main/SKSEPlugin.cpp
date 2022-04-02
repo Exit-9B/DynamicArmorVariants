@@ -1,6 +1,7 @@
 #include "ConfigLoader.h"
 #include "Hooks.h"
 #include "Papyrus/Papyrus.h"
+#include "Serialization.h"
 #include "WornFormUpdater.h"
 
 namespace
@@ -84,6 +85,13 @@ extern "C" DLLEXPORT bool SKSEAPI SKSEPlugin_Load(const SKSE::LoadInterface* a_s
 	Hooks::Install();
 
 	SKSE::GetPapyrusInterface()->Register(Papyrus::RegisterFuncs);
+
+	if (auto serialization = SKSE::GetSerializationInterface()) {
+		serialization->SetUniqueID(Serialization::ID);
+		serialization->SetSaveCallback(&Serialization::SaveCallback);
+		serialization->SetLoadCallback(&Serialization::LoadCallback);
+		serialization->SetRevertCallback(&Serialization::RevertCallback);
+	}
 
 	SKSE::GetMessagingInterface()->RegisterListener(
 		[](auto a_msg)

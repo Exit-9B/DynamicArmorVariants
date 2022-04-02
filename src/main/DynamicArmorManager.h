@@ -41,7 +41,18 @@ public:
 
 	void ResetAllVariants(RE::Actor* a_actor);
 
+	void ResetAllVariants(RE::FormID a_formID);
+
+	void Serialize(SKSE::SerializationInterface* a_skse);
+
+	void Deserialize(SKSE::SerializationInterface* a_skse);
+
+	void Revert();
+
 private:
+	static constexpr std::uint32_t SerializationVersion = 1;
+	static constexpr std::uint32_t SerializationType = 'DAVO';
+
 	DynamicArmorManager() = default;
 
 	auto IsUsingVariant(RE::Actor* a_actor, std::string a_state) const -> bool;
@@ -49,5 +60,5 @@ private:
 	tsl::ordered_map<std::string, ArmorVariant> _variants;
 
 	std::unordered_map<std::string, std::shared_ptr<RE::TESCondition>> _conditions;
-	std::unordered_map<RE::Actor*, std::unordered_set<std::string>> _variantOverrides;
+	std::unordered_map<RE::FormID, std::unordered_set<std::string>> _variantOverrides;
 };

@@ -2,10 +2,12 @@
 
 #include "Ext/Actor.h"
 #include "RE/TESActorLocationChangeEvent.h"
+#include "RE/TESFormDeleteEvent.h"
 
 class WornFormUpdater :
 	public RE::BSTEventSink<RE::TESActorLocationChangeEvent>,
 	public RE::BSTEventSink<RE::TESCombatEvent>,
+	public RE::BSTEventSink<RE::TESFormDeleteEvent>,
 	public RE::BSTEventSink<RE::TESMagicEffectApplyEvent>
 {
 public:
@@ -27,6 +29,11 @@ public:
 	auto ProcessEvent(
 		const RE::TESCombatEvent* a_event,
 		RE::BSTEventSource<RE::TESCombatEvent>* a_eventSource)
+		-> RE::BSEventNotifyControl override;
+
+	auto ProcessEvent(
+		const RE::TESFormDeleteEvent* a_event,
+		RE::BSTEventSource<RE::TESFormDeleteEvent>* a_eventSource)
 		-> RE::BSEventNotifyControl override;
 
 	auto ProcessEvent(

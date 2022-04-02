@@ -135,7 +135,8 @@ auto DynamicArmorManager::GetBipedObjectSlots(RE::Actor* a_actor, RE::TESObjectA
 
 auto DynamicArmorManager::IsUsingVariant(RE::Actor* a_actor, std::string a_state) const -> bool
 {
-	if (auto it = _variantOverrides.find(a_actor); it != _variantOverrides.end()) {
+	if (auto it = _variantOverrides.find(a_actor->GetFormID()); it != _variantOverrides.end()) {
+
 		if (it->second.contains(a_state)) {
 			return true;
 		}
@@ -252,7 +253,7 @@ void DynamicArmorManager::ApplyVariant(RE::Actor* a_actor, const std::string& a_
 
 	// Remove previous overrides that affect the same armor items
 	auto [elem, inserted] = _variantOverrides.try_emplace(
-		a_actor,
+		a_actor->GetFormID(),
 		std::unordered_set<std::string>());
 
 	auto& overrides = elem->second;
@@ -296,7 +297,7 @@ void DynamicArmorManager::ApplyVariant(
 
 	// Remove previous overrides that affect the armor
 	auto [elem, inserted] = _variantOverrides.try_emplace(
-		a_actor,
+		a_actor->GetFormID(),
 		std::unordered_set<std::string>());
 
 	auto& overrides = elem->second;
@@ -319,7 +320,7 @@ void DynamicArmorManager::ApplyVariant(
 
 void DynamicArmorManager::ResetVariant(RE::Actor* a_actor, const RE::TESObjectARMO* a_armor)
 {
-	auto it = _variantOverrides.find(a_actor);
+	auto it = _variantOverrides.find(a_actor->GetFormID());
 	if (it == _variantOverrides.end())
 		return;
 
@@ -338,6 +339,11 @@ void DynamicArmorManager::ResetVariant(RE::Actor* a_actor, const RE::TESObjectAR
 
 void DynamicArmorManager::ResetAllVariants(RE::Actor* a_actor)
 {
-	_variantOverrides.erase(a_actor);
+	_variantOverrides.erase(a_actor->GetFormID());
 	Ext::Actor::Update3DSafe(a_actor);
+}
+
+void DynamicArmorManager::ResetAllVariants(RE::FormID a_formID)
+{
+	_variantOverrides.erase(a_formID);
 }

@@ -1,4 +1,5 @@
 #include "WornFormUpdater.h"
+#include "DynamicArmorManager.h"
 
 auto WornFormUpdater::GetSingleton() -> WornFormUpdater*
 {
@@ -11,6 +12,7 @@ void WornFormUpdater::Install()
 	auto eventSource = RE::ScriptEventSourceHolder::GetSingleton();
 	eventSource->AddEventSink<RE::TESActorLocationChangeEvent>(GetSingleton());
 	eventSource->AddEventSink<RE::TESCombatEvent>(GetSingleton());
+	eventSource->AddEventSink<RE::TESFormDeleteEvent>(GetSingleton());
 	eventSource->AddEventSink<RE::TESMagicEffectApplyEvent>(GetSingleton());
 }
 
@@ -36,6 +38,16 @@ auto WornFormUpdater::ProcessEvent(
 	if (actor && actor->Is3DLoaded()) {
 		Ext::Actor::Update3DSafe(actor);
 	}
+
+	return RE::BSEventNotifyControl::kContinue;
+}
+
+auto WornFormUpdater::ProcessEvent(
+	const RE::TESFormDeleteEvent* a_event,
+	[[maybe_unused]] RE::BSTEventSource<RE::TESFormDeleteEvent>* a_eventSource)
+	-> RE::BSEventNotifyControl
+{
+	DynamicArmorManager::GetSingleton()->ResetAllVariants(a_event->formID);
 
 	return RE::BSEventNotifyControl::kContinue;
 }
