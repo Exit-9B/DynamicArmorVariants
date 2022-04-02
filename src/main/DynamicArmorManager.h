@@ -51,7 +51,7 @@ public:
 
 private:
 	static constexpr std::uint32_t SerializationVersion = 1;
-	static constexpr std::uint32_t SerializationType = 'DAVO';
+	static constexpr std::uint32_t SerializationType = 'AAVO';
 
 	DynamicArmorManager() = default;
 
