@@ -2,11 +2,6 @@ Scriptname DynamicArmor_Menu Hidden
 
 Function OpenMenu(Actor akActor) global
 	Armor[] wornArmors = DynamicArmor.GetEquippedArmorsWithVariants(akActor)
-	if wornArmors.Length == 0
-		Message DAV_NoVariants = Game.GetFormFromFile(0x805, "DynamicArmorMenu.esp") as Message
-		DAV_NoVariants.Show()
-		return
-	endif
 
 	UIListMenu menu = Game.GetFormFromFile(0xE05, "UIExtensions.esp") as UIListMenu
 
@@ -14,7 +9,7 @@ Function OpenMenu(Actor akActor) global
 		menu.ResetMenu()
 	else
 		Message DAV_UIExtensions_NotFound = \
-			Game.GetFormFromFile(0x806, "DynamicArmorMenu.esp") as Message
+			Game.GetFormFromFile(0x805, "DynamicArmorMenu.esp") as Message
 		DAV_UIExtensions_NotFound.Show()
 		return
 	endif
