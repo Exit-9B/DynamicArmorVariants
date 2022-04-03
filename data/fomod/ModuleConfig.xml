@@ -54,6 +54,15 @@
 								<type name="Optional"/> 
 							</typeDescriptor> 
 						</plugin> 
+						<plugin name="Hidden Equipment"> 
+							<description>Contains invisible armor addons for helmets, circlets, backpacks, and cloaks. This addon is not usable by itself and is recommended to be used alongside the UIExtensions Menu addon.</description> 
+							<files> 
+								<folder source="HiddenEquipment" destination="" priority="0" /> 
+							</files> 
+							<typeDescriptor> 
+								<type name="Optional"/> 
+							</typeDescriptor> 
+						</plugin> 
 					</plugins> 
 				</group> 
 			</optionalFileGroups> 

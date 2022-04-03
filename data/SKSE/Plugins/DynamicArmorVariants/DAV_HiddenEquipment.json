@@ -1,0 +1,36 @@
+{
+  "$schema": "https://raw.githubusercontent.com/Exit-9B/DynamicArmorVariants/main/docs/DynamicArmorVariants.schema.json",
+  "variants": [
+    {
+      "name": "DAV_HiddenCirclet",
+      "displayName": "$Hidden",
+      "replaceBySlot": {
+        "42": "DAV_HiddenEquipment.esp|800"
+      }
+    },
+    {
+      "name": "DAV_HiddenHelmet",
+      "displayName": "$Hidden",
+      "linkTo": "DAV_HiddenCirclet",
+      "showHair": true,
+      "replaceBySlot": {
+        "30": "DAV_HiddenEquipment.esp|801",
+        "31": "DAV_HiddenEquipment.esp|801"
+      }
+    },
+    {
+      "name": "DAV_HiddenBackpack",
+      "displayName": "$Hidden",
+      "replaceBySlot": {
+        "47": "DAV_HiddenEquipment.esp|802"
+      }
+    },
+    {
+      "name": "DAV_HiddenCloak",
+      "displayName": "$Hidden",
+      "replaceBySlot": {
+        "46": "DAV_HiddenEquipment.esp|803"
+      }
+    }
+  ]
+}

@@ -235,6 +235,27 @@ install(
 
 install(
 	FILES
+		"${CMAKE_CURRENT_SOURCE_DIR}/data/DAV_HiddenEquipment.esp"
+	DESTINATION "."
+	COMPONENT HiddenEquipment
+)
+
+install(
+	FILES
+		"${CMAKE_CURRENT_SOURCE_DIR}/data/SKSE/Plugins/DynamicArmorVariants/DAV_HiddenEquipment.json"
+	DESTINATION "SKSE/Plugins/DynamicArmorVariants"
+	COMPONENT HiddenEquipment
+)
+
+install(
+	FILES
+		"${CMAKE_CURRENT_SOURCE_DIR}/data/Interface/Translations/DAV_HiddenEquipment_ENGLISH.txt"
+	DESTINATION "Interface/Translations"
+	COMPONENT HiddenEquipment
+)
+
+install(
+	FILES
 		"${CMAKE_CURRENT_SOURCE_DIR}/data/fomod/info.xml"
 		"${CMAKE_CURRENT_SOURCE_DIR}/data/fomod/ModuleConfig.xml"
 	DESTINATION "fomod"
