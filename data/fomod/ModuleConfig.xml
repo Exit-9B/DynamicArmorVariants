@@ -11,6 +11,7 @@
 					<plugins order="Explicit"> 
 						<plugin name="Skyrim Special Edition"> 
 							<description>Skyrim Special Edition 1.6.x</description> 
+							<image path="fomod\images\skyrim_se.jpg" /> 
 							<files> 
 								<file source="SkyrimSE\SKSE\Plugins\DynamicArmorVariants.dll" destination="SKSE\Plugins\DynamicArmorVariants.dll" priority="0" /> 
 							</files> 
@@ -20,6 +21,7 @@
 						</plugin> 
 						<plugin name="Skyrim VR"> 
 							<description>Skyrim VR 1.4.15.1</description> 
+							<image path="fomod\images\skyrim_vr.jpg" /> 
 							<files> 
 								<file source="SkyrimVR\SKSE\Plugins\DynamicArmorVariants.dll" destination="SKSE\Plugins\DynamicArmorVariants.dll" priority="0" /> 
 							</files> 
@@ -47,6 +49,7 @@
 					<plugins order="Explicit"> 
 						<plugin name="UIExtensions Menu"> 
 							<description>Adds a menu for manually customizing armor variants for yourself or NPCs. Requires UIExtensions and MCM Helper.</description> 
+							<image path="fomod\images\uiextensions.jpg" /> 
 							<files> 
 								<folder source="UIExtensions_Menu" destination="" priority="0" /> 
 							</files> 
