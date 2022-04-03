@@ -5,7 +5,7 @@
       "name": "LoweredHoods",
       "displayName": "$Lowered Hood",
       "linkTo": "DAV_HiddenHelmet",
-      "showHair": true,
+      "overrideHead": "showAll",
       "replaceByForm": {
         "Skyrim.esm|035F7A": "DynamicLoweredHoods.esp|80F",
         "Skyrim.esm|05DB84": "DynamicLoweredHoods.esp|812",

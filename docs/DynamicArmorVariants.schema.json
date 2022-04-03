@@ -22,13 +22,10 @@
             "description": "The name of a separately defined variant, which this variant will take precedence over for matching Armor Addons",
             "type": "string"
           },
-          "showHead": {
-            "description": "Prevents the Armor from hiding the character's head when replacing any of its Armor Addons",
-            "type": "boolean"
-          },
-          "showHair": {
-            "description": "Prevents the Armor from hiding the character's head or hair when replacing any of its Armor Addons",
-            "type": "boolean"
+          "overrideHead": {
+            "description": "Force the character's head and/or hair to be hidden or shown when replacing Armor Addons",
+            "type": "string",
+            "enum": ["none", "showAll", "showHead", "hideHair", "hideAll"]
           },
           "replaceByForm": {
             "description": "Assigns replacements for specific Armor Addon forms",

@@ -83,14 +83,23 @@ void ConfigLoader::LoadVariant(std::string_view a_name, Json::Value a_variant)
 	armorVariant.Linked = a_variant["linkTo"].asString();
 	armorVariant.DisplayName = a_variant["displayName"].asString();
 
-	auto& showHead = a_variant["showHead"];
-	if (showHead.isBool()) {
-		armorVariant.ShowHead = showHead.asBool();
-	}
-
-	auto& showHair = a_variant["showHair"];
-	if (showHair.isBool()) {
-		armorVariant.ShowHair = showHair.asBool();
+	auto& overrideHead = a_variant["overrideHead"];
+	if (overrideHead.isString()) {
+		if (overrideHead == "none"s) {
+			armorVariant.OverrideHead = ArmorVariant::OverrideOption::None;
+		}
+		else if (overrideHead == "showAll"s) {
+			armorVariant.OverrideHead = ArmorVariant::OverrideOption::ShowAll;
+		}
+		else if (overrideHead == "showHead"s) {
+			armorVariant.OverrideHead = ArmorVariant::OverrideOption::ShowHead;
+		}
+		else if (overrideHead == "hideHair"s) {
+			armorVariant.OverrideHead = ArmorVariant::OverrideOption::HideHair;
+		}
+		else if (overrideHead == "hideAll"s) {
+			armorVariant.OverrideHead = ArmorVariant::OverrideOption::HideAll;
+		}
 	}
 
 	LoadFormMap(a_variant["replaceByForm"], armorVariant.ReplaceByForm);

@@ -24,12 +24,8 @@ void DynamicArmorManager::RegisterArmorVariant(std::string_view a_name, ArmorVar
 		variant.DisplayName = a_variant.DisplayName;
 	}
 
-	if (a_variant.ShowHead.has_value()) {
-		variant.ShowHead = a_variant.ShowHead.value();
-	}
-
-	if (a_variant.ShowHair.has_value()) {
-		variant.ShowHair = a_variant.ShowHair.value();
+	if (a_variant.OverrideHead != ArmorVariant::OverrideOption::Undefined) {
+		variant.OverrideHead = a_variant.OverrideHead;
 	}
 
 	for (auto& [form, replacement] : a_variant.ReplaceByForm) {
@@ -97,8 +93,7 @@ auto DynamicArmorManager::GetBipedObjectSlots(RE::Actor* a_actor, RE::TESObjectA
 	if (!race)
 		return slot.get();
 
-	bool showHead = false;
-	bool showHair = false;
+	auto overrideOption = ArmorVariant::OverrideOption::None;
 
 	for (auto& armorAddon : a_armor->armorAddons) {
 		for (auto& [name, variant] : _variants) {
@@ -110,11 +105,10 @@ auto DynamicArmorManager::GetBipedObjectSlots(RE::Actor* a_actor, RE::TESObjectA
 				continue;
 
 			if (IsUsingVariant(a_actor, name)) {
-				if (variant.ShowHead.value_or(false)) {
-					showHead = true;
-				}
-				if (variant.ShowHair.value_or(false)) {
-					showHair = true;
+				if (util::to_underlying(variant.OverrideHead) >
+				    util::to_underlying(overrideOption)) {
+
+					overrideOption = variant.OverrideHead;
 				}
 			}
 		}
@@ -123,11 +117,19 @@ auto DynamicArmorManager::GetBipedObjectSlots(RE::Actor* a_actor, RE::TESObjectA
 	auto headSlot = static_cast<BipedObjectSlot>(1 << race->data.headObject.get());
 	auto hairSlot = static_cast<BipedObjectSlot>(1 << race->data.hairObject.get());
 
-	if (showHair) {
+	switch (overrideOption) {
+	case ArmorVariant::OverrideOption::ShowAll:
 		slot.reset(headSlot, hairSlot);
-	}
-	else if (showHead) {
+		break;
+	case ArmorVariant::OverrideOption::ShowHead:
 		slot.reset(headSlot);
+		break;
+	case ArmorVariant::OverrideOption::HideHair:
+		slot.set(headSlot);
+		break;
+	case ArmorVariant::OverrideOption::HideAll:
+		slot.set(headSlot, hairSlot);
+		break;
 	}
 
 	return slot.get();

@@ -12,7 +12,7 @@
       "name": "DAV_HiddenHelmet",
       "displayName": "$Hidden",
       "linkTo": "DAV_HiddenCirclet",
-      "showHair": true,
+      "overrideHead": "showAll",
       "replaceBySlot": {
         "30": "DAV_HiddenEquipment.esp|801",
         "31": "DAV_HiddenEquipment.esp|801"
