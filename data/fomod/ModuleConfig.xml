@@ -1,0 +1,62 @@
+<!-- Created with FOMOD Creation Tool 1.7.0.37 [http://www.nexusmods.com/fallout4/mods/6821] --> 
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://qconsulting.ca/fo3/ModConfig5.0.xsd"> 
+	<moduleName>Dynamic Armor Variants</moduleName> 
+	<requiredInstallFiles> 
+		<folder source="Data" destination="" /> 
+	</requiredInstallFiles> 
+	<installSteps order="Explicit"> 
+		<installStep name="Game Version"> 
+			<optionalFileGroups order="Explicit"> 
+				<group name="Game Version" type="SelectExactlyOne"> 
+					<plugins order="Explicit"> 
+						<plugin name="Skyrim Special Edition"> 
+							<description>Skyrim Special Edition 1.6.x</description> 
+							<files> 
+								<file source="SkyrimSE\SKSE\Plugins\DynamicArmorVariants.dll" destination="SKSE\Plugins\DynamicArmorVariants.dll" priority="0" /> 
+							</files> 
+							<typeDescriptor> 
+								<type name="Optional"/> 
+							</typeDescriptor> 
+						</plugin> 
+						<plugin name="Skyrim VR"> 
+							<description>Skyrim VR 1.4.15.1</description> 
+							<files> 
+								<file source="SkyrimVR\SKSE\Plugins\DynamicArmorVariants.dll" destination="SKSE\Plugins\DynamicArmorVariants.dll" priority="0" /> 
+							</files> 
+							<typeDescriptor> 
+								<dependencyType> 
+									<defaultType name="Optional"/> 
+									<patterns> 
+										<pattern> 
+											<dependencies operator="And"> 
+												<fileDependency file="SkyrimVR.esm" state="Active"/> 
+											</dependencies> 
+											<type name="Recommended"/> 
+										</pattern> 
+									</patterns> 
+								</dependencyType> 
+							</typeDescriptor> 
+						</plugin> 
+					</plugins> 
+				</group> 
+			</optionalFileGroups> 
+		</installStep> 
+		<installStep name="Addons"> 
+			<optionalFileGroups order="Explicit"> 
+				<group name="Select Addons" type="SelectAny"> 
+					<plugins order="Explicit"> 
+						<plugin name="UIExtensions Menu"> 
+							<description>Adds a menu for manually customizing armor variants for yourself or NPCs. Requires UIExtensions and MCM Helper.</description> 
+							<files> 
+								<folder source="UIExtensions_Menu" destination="" priority="0" /> 
+							</files> 
+							<typeDescriptor> 
+								<type name="Optional"/> 
+							</typeDescriptor> 
+						</plugin> 
+					</plugins> 
+				</group> 
+			</optionalFileGroups> 
+		</installStep> 
+	</installSteps> 
+</config>
