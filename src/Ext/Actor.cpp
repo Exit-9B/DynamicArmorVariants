@@ -12,6 +12,6 @@ namespace Ext
 
 	void Actor::Update3DSafe(RE::Actor* a_actor)
 	{
-		SKSE::GetTaskInterface()->AddUITask(std::bind(&Actor::Update3D, a_actor));
+		SKSE::GetTaskInterface()->AddTask(std::bind(&Actor::Update3D, a_actor));
 	}
 }
