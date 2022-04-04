@@ -265,3 +265,13 @@ install(
 	COMPONENT Fomod
 	EXCLUDE_FROM_ALL
 )
+
+install(
+	FILES
+		"${CMAKE_CURRENT_SOURCE_DIR}/data/fomod/images/skyrim_se.jpg"
+		"${CMAKE_CURRENT_SOURCE_DIR}/data/fomod/images/skyrim_vr.jpg"
+		"${CMAKE_CURRENT_SOURCE_DIR}/data/fomod/images/uiextensions.jpg"
+	DESTINATION "fomod/images"
+	COMPONENT Fomod
+	EXCLUDE_FROM_ALL
+)
