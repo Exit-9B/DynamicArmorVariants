@@ -1,9 +1,10 @@
 <fomod> 
 	<Name>Dynamic Armor Variants</Name> 
 	<Author>Parapets</Author> 
-	<Version>1.0.0</Version> 
+	<Version>1.0.1</Version> 
+	<Website>https://www.nexusmods.com/skyrimspecialedition/mods/65154</Website> 
 	<Description>Framework for mods to define variants of armors by swapping armor addons dynamically at runtime.</Description> 
 	<Groups>
-		<element>Modders Resources and Tutorials</element>
+		<element>Utilities</element>
 	</Groups> 
 </fomod> 
