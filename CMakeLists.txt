@@ -258,9 +258,6 @@ install(
 	FILES
 		"${CMAKE_CURRENT_SOURCE_DIR}/data/fomod/info.xml"
 		"${CMAKE_CURRENT_SOURCE_DIR}/data/fomod/ModuleConfig.xml"
-		"${CMAKE_CURRENT_SOURCE_DIR}/data/fomod/images/skyrim_se.jpg"
-		"${CMAKE_CURRENT_SOURCE_DIR}/data/fomod/images/skyrim_vr.jpg"
-		"${CMAKE_CURRENT_SOURCE_DIR}/data/fomod/images/uiextensions.jpg"
 	DESTINATION "fomod"
 	COMPONENT Fomod
 	EXCLUDE_FROM_ALL
