@@ -13,7 +13,8 @@ void WornFormUpdater::Install()
 	eventSource->AddEventSink<RE::TESActorLocationChangeEvent>(GetSingleton());
 	eventSource->AddEventSink<RE::TESCombatEvent>(GetSingleton());
 	eventSource->AddEventSink<RE::TESFormDeleteEvent>(GetSingleton());
-	eventSource->AddEventSink<RE::TESMagicEffectApplyEvent>(GetSingleton());
+	// TODO: Uncomment when we can ensure we only run updates when variants change
+	//eventSource->AddEventSink<RE::TESMagicEffectApplyEvent>(GetSingleton());
 }
 
 auto WornFormUpdater::ProcessEvent(
