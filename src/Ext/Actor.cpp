@@ -20,4 +20,31 @@ namespace Ext
 				}
 			});
 	}
+
+	bool Actor::IsSkin(RE::Actor* a_actor, RE::TESObjectARMO* a_armor) {
+		if (const auto base = a_actor->GetActorBase(); base && base->skin) {
+			return a_armor == base->skin;
+		} else if (const auto aRace = a_actor->GetRace(); aRace && aRace->skin) {
+			return a_armor == aRace->skin;
+		}
+
+		return false;
+	}
+
+	bool Actor::IsSkin(RE::Actor* a_actor, RE::TESObjectARMA* a_armorAddon) {
+		const RE::TESObjectARMO* skin = nullptr;
+
+		if (const auto base = a_actor->GetActorBase(); base && base->skin) {
+			skin = base->skin;
+		} else if (const auto aRace = a_actor->GetRace(); aRace && aRace->skin) {
+			skin = aRace->skin;
+		}
+
+		if (!skin) {
+			return false;
+		}
+
+		auto it = std::find(skin->armorAddons.begin(), skin->armorAddons.end(), a_armorAddon);
+		return it != skin->armorAddons.end();
+	}
 }

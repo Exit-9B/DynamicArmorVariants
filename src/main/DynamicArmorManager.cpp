@@ -53,6 +53,11 @@ void DynamicArmorManager::VisitArmorAddons(
 	std::unordered_map<std::string, const ArmorVariant::AddonList*> addonLists;
 	std::string variantState;
 
+	if (Ext::Actor::IsSkin(a_actor, a_armorAddon)) {
+		a_visit(a_armorAddon);
+		return;
+	}
+
 	for (auto& [name, variant] : _variants) {
 
 		auto addonList = variant.GetAddonList(a_armorAddon);
@@ -92,6 +97,10 @@ auto DynamicArmorManager::GetBipedObjectSlots(RE::Actor* a_actor, RE::TESObjectA
 
 	if (!race)
 		return slot.get();
+
+	if (Ext::Actor::IsSkin(a_actor, a_armor)) {
+		return slot.get();
+	}
 
 	auto overrideOption = ArmorVariant::OverrideOption::None;
 
