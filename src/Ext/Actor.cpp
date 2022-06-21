@@ -15,7 +15,7 @@ namespace Ext
 		auto handle = a_actor->GetHandle();
 		SKSE::GetTaskInterface()->AddTask([handle]
 			{
-				if (auto actor = handle.get()) {
+				if (auto actor = handle.get(); actor && actor->Is3DLoaded()) {
 					Update3D(actor.get());
 				}
 			});
