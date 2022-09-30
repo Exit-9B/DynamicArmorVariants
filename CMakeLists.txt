@@ -1,8 +1,8 @@
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.22)
 
 project(
 	DynamicArmorVariants
-	VERSION 1.0.3
+	VERSION 1.0.4
 	LANGUAGES CXX
 )
 
@@ -59,7 +59,7 @@ include(Papyrus)
 add_library("${PROJECT_NAME}" SHARED)
 
 target_compile_features(
-	"${PROJECT_NAME}"
+	${PROJECT_NAME}
 	PRIVATE
 		cxx_std_20
 )
@@ -79,7 +79,7 @@ configure_file(
 )
 
 target_sources(
-	"${PROJECT_NAME}"
+	${PROJECT_NAME}
 	PRIVATE
 		${CMAKE_CURRENT_BINARY_DIR}/src/Plugin.h
 		${CMAKE_CURRENT_BINARY_DIR}/version.rc
@@ -104,23 +104,23 @@ target_include_directories(
 
 if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
 	target_compile_options(
-		"${PROJECT_NAME}"
+		${PROJECT_NAME}
 		PRIVATE
-			"/sdl"	# Enable Additional Security Checks
-			"/utf-8"	# Set Source and Executable character sets to UTF-8
-			"/Zi"	# Debug Information Format
+			"/sdl"              # Enable Additional Security Checks
+			"/utf-8"            # Set Source and Executable character sets to UTF-8
+			"/Zi"               # Debug Information Format
 
-			"/permissive-"	# Standards conformance
+			"/permissive-"      # Standards conformance
 			"/Zc:preprocessor"	# Enable preprocessor conformance mode
 
-			"/wd4200" # nonstandard extension used : zero-sized array in struct/union
+			"/wd4200"           # nonstandard extension used : zero-sized array in struct/union
 
 			"$<$<CONFIG:DEBUG>:>"
 			"$<$<CONFIG:RELEASE>:/Zc:inline;/JMC-;/Ob3>"
 	)
 
 	target_link_options(
-		"${PROJECT_NAME}"
+		${PROJECT_NAME}
 		PRIVATE
 			"$<$<CONFIG:DEBUG>:/INCREMENTAL;/OPT:NOREF;/OPT:NOICF>"
 			"$<$<CONFIG:RELEASE>:/INCREMENTAL:NO;/OPT:REF;/OPT:ICF;/DEBUG:FULL>"
