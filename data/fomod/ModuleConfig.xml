@@ -13,7 +13,7 @@
 							<description>Skyrim Special Edition 1.6.x</description> 
 							<image path="fomod\images\skyrim_se.jpg" /> 
 							<files> 
-								<file source="SkyrimSE\SKSE\Plugins\DynamicArmorVariants.dll" destination="SKSE\Plugins\DynamicArmorVariants.dll" priority="0" /> 
+								<folder source="SkyrimSE\SKSE" destination="SKSE" priority="0" /> 
 							</files> 
 							<typeDescriptor> 
 								<type name="Optional"/> 
@@ -23,7 +23,7 @@
 							<description>Skyrim VR 1.4.15.1</description> 
 							<image path="fomod\images\skyrim_vr.jpg" /> 
 							<files> 
-								<file source="SkyrimVR\SKSE\Plugins\DynamicArmorVariants.dll" destination="SKSE\Plugins\DynamicArmorVariants.dll" priority="0" /> 
+								<folder source="SkyrimVR\SKSE" destination="SKSE" priority="0" /> 
 							</files> 
 							<typeDescriptor> 
 								<dependencyType> 
