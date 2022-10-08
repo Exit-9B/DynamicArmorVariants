@@ -1,11 +1,5 @@
 @echo off
 
-md "package\SkyrimSE"
-md "package\SkyrimVR"
-md "package\Data"
-md "package\UIExtensions_Menu"
-md "package\HiddenEquipment"
-
 cmake --preset vs2019-windows --check-stamp-file "build/CMakeFiles/generate.stamp" || goto :error
 cmake --build build --config Release || goto :error
 cmake --install build --component "Fomod" --prefix "package" || goto :error

@@ -1,9 +1,7 @@
 {
+  "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg/master/scripts/vcpkg.schema.json",
   "name": "dynamicarmorvariants",
   "version": "1",
-  "description": "Framework for mods to define dynamic variants of armors",
-  "homepage": "https://github.com/Exit-9B/DynamicArmorVariants",
-  "license": "MIT",
   "dependencies": [
     "boost-stl-interfaces",
     "jsoncpp",
