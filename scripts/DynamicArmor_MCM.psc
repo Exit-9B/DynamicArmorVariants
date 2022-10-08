@@ -30,26 +30,26 @@ Function AddPower()
 	PlayerRef.AddSpell(DAV_ConfigPower)
 	PlayerHasConfigPower = true
 	SetModSettingBool("bUseConfigPower:DynamicArmorMenu", true)
-	RefreshMenu()
+	ForcePageReset()
 EndFunction
 
 Function RemovePower()
 	PlayerRef.RemoveSpell(DAV_ConfigPower)
 	PlayerHasConfigPower = false
 	SetModSettingBool("bUseConfigPower:DynamicArmorMenu", false)
-	RefreshMenu()
+	ForcePageReset()
 EndFunction
 
 Function AddNPCSpell()
 	PlayerRef.AddSpell(DAV_NPCConfigSpell)
 	PlayerHasNPCConfigSpell = true
 	SetModSettingBool("bUseNPCConfigSpell:DynamicArmorMenu", true)
-	RefreshMenu()
+	ForcePageReset()
 EndFunction
 
 Function RemoveNPCSpell()
 	PlayerRef.RemoveSpell(DAV_NPCConfigSpell)
 	PlayerHasNPCConfigSpell = false
 	SetModSettingBool("bUseNPCConfigSpell:DynamicArmorMenu", false)
-	RefreshMenu()
+	ForcePageReset()
 EndFunction
